@@ -1,0 +1,79 @@
+{
+	"rocket": {
+		"enabled": true,
+		"launch_rod_length_m": {
+			"enabled": true,
+			"mean": 5.00,
+			"stddev": 0,
+			"mode": "retry_then_mean_negatives"
+		},
+		"launch_rod_angle_deg": {
+			"enabled": true,
+			"mean": 0.0,
+			"stddev": 1.0,
+			"mode": "normal"
+		},
+		"total_motorless_mass_kg": {
+			"enabled": true,
+			"mean": 16.709,
+			"stddev": 0.500,
+			"mode": "retry_then_mean_negatives"
+		},
+		"centre_of_gravity": {
+			"enabled": false,
+			"mean": 0,
+			"stddev": 0,
+			"mode": "normal"
+		},
+		"surface_finish_um": {
+			"enabled": true,
+			"mean": 5,
+			"stddev": 3,
+			"mode": "retry_then_mean_negatives"
+		}
+	},
+	"launch_site": {
+		"enabled": true,
+		"latitude": {
+			"mean": -29.7,
+			"stddev": 0,
+			"mode": "normal"
+		},
+		"longitude": {
+			"mean": 149,
+			"stddev": 0,
+			"mode": "normal"
+		},
+		"altitude_m": {
+			"mean": 175,
+			"stddev": 0,
+			"mode": "normal"
+		}
+	},
+	"launch_site_atmosphere": {
+		"enabled": true,
+		"temperature_c": {
+			"mean": 24.0,
+			"stddev": 3.0,
+			"mode": "retry_then_mean_negatives"
+		},
+		"pressure_pa": {
+			"mean": 99240.0,
+			"stddev": 0.0,
+			"mode": "retry_then_mean_negatives"
+		}
+	},
+	"wind": {
+		"enabled": true,
+		"average_speed_mps": {
+			"mean": 4.3,
+			"stddev": 1.5,
+			"mode": "retry_then_mean_negatives"
+		},
+		"turbulence_frac": {
+			"mean": 0.1,
+			"stddev": 0.0,
+			"mode": "retry_then_mean_negatives"
+		}
+	}
+}

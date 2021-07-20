@@ -1,0 +1,9 @@
+launchRodAngle,on,flip_negatives,0,1.0
+totalMass,on,retry_then_mean_negatives,17.763,0.500
+cg,off,normal,0,0
+launchAltitude,on,normal,218,0
+launchTemperature,on,retry_then_mean_negatives,302.15,3.0
+launchPressure,on,retry_then_mean_negatives,102010,0
+averageWindSpeed,on,retry_then_mean_negatives,3.0,1.5
+stddevWindSpeed,on,retry_then_mean_negatives,0.3,0.0
+surfaceFinish,on,retry_then_mean_negatives,0.000005,0.000003

@@ -6,6 +6,7 @@ import java.util.EventObject;
 import java.util.List;
 import java.util.Random;
 
+import net.sf.openrocket.aerodynamics.LookupCalculator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -564,7 +565,8 @@ public class SimulationOptions implements ChangeSource, Cloneable {
 		
 		conditions.setGravityModel(gravityModel);
 		
-		conditions.setAerodynamicCalculator(new BarrowmanCalculator());
+//		conditions.setAerodynamicCalculator(new BarrowmanCalculator());
+		conditions.setAerodynamicCalculator(new LookupCalculator());
 		conditions.setMassCalculator(new MassCalculator());
 		
 		conditions.setTimeStep(getTimeStep());
