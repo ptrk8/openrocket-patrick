@@ -57,7 +57,7 @@ public class LookupCalculator extends AbstractAerodynamicCalculator {
 			aeroCoefficients = new ObjectMapper().readValue(
 				Resources.toString(
 					Resources.getResource(
-						"usyd/coefficients/aero-coefficients_rad.json"
+                        "extension/coefficients/aero-coefficients_rad.json"
 					),
 					StandardCharsets.UTF_8
 				),
