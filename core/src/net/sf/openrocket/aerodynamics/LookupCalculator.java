@@ -2,8 +2,9 @@ package net.sf.openrocket.aerodynamics;
 
 import static net.sf.openrocket.util.MathUtil.pow2;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.io.Resources;
-import com.google.gson.Gson;
+//import com.google.gson.Gson;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
@@ -53,7 +54,7 @@ public class LookupCalculator extends AbstractAerodynamicCalculator {
 
 	public LookupCalculator() {
 		try {
-			aeroCoefficients = new Gson().fromJson(
+			aeroCoefficients = new ObjectMapper().readValue(
 				Resources.toString(
 					Resources.getResource(
 						"usyd/coefficients/aero-coefficients_rad.json"
