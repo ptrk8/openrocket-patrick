@@ -4,7 +4,6 @@ import static net.sf.openrocket.util.MathUtil.pow2;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.io.Resources;
-//import com.google.gson.Gson;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
@@ -933,6 +932,11 @@ public class LookupCalculator extends AbstractAerodynamicCalculator {
 	public int getModID() {
 		// Only cached data is stored, return constant mod ID
 		return 0;
+	}
+
+	@Override
+	public String toString() {
+		return "Lookup Calculator";
 	}
 
 }

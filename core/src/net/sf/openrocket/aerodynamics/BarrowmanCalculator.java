@@ -868,5 +868,10 @@ public class BarrowmanCalculator extends AbstractAerodynamicCalculator {
 		// Only cached data is stored, return constant mod ID
 		return 0;
 	}
+
+	@Override
+	public String toString() {
+		return "Barrowman Calculator";
+	}
 	
 }

@@ -24,6 +24,9 @@ import javax.swing.MenuElement;
 import javax.swing.SwingUtilities;
 
 import net.miginfocom.swing.MigLayout;
+import net.sf.openrocket.aerodynamics.AerodynamicCalculator;
+import net.sf.openrocket.aerodynamics.BarrowmanCalculator;
+import net.sf.openrocket.aerodynamics.LookupCalculator;
 import net.sf.openrocket.document.OpenRocketDocument;
 import net.sf.openrocket.document.Simulation;
 import net.sf.openrocket.gui.SpinnerEditor;
@@ -86,7 +89,28 @@ class SimulationOptionsPanel extends JPanel {
 		// Separate panel for computation methods, as they use a different
 		// layout
 		subsub = new JPanel(new MigLayout("insets 0, fill", "[grow][min!][min!][]"));
-		
+
+		// // Calculation method switcher
+		label = new JLabel(trans.get("simedtdlg.lbl.CalculationMethod"));
+		label.setToolTipText(trans.get("simedtdlg.lbl.ttip.CalculationMethod"));
+		subsub.add(label, "gapright para");
+
+		JComboBox<AerodynamicCalculator> calcMethodCombo = new JComboBox<>(new AerodynamicCalculator[]{
+			new BarrowmanCalculator(),
+			new LookupCalculator()
+		});
+		ActionListener calcMethodListener = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JComboBox<AerodynamicCalculator> cb = (JComboBox<AerodynamicCalculator>) e.getSource();
+				AerodynamicCalculator selectedItem = (AerodynamicCalculator) cb.getSelectedItem();
+				System.out.println(selectedItem);
+				conditions.setAerodynamicCalculator(selectedItem);
+			}
+		};
+		calcMethodCombo.addActionListener(calcMethodListener);
+		subsub.add(calcMethodCombo, "span 3, wrap");
+
 		// // Calculation method:
 		tip = trans.get("simedtdlg.lbl.ttip.Calcmethod");
 		label = new JLabel(trans.get("simedtdlg.lbl.Calcmethod"));

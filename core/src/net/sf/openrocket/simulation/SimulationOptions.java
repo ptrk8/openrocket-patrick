@@ -6,6 +6,7 @@ import java.util.EventObject;
 import java.util.List;
 import java.util.Random;
 
+import net.sf.openrocket.aerodynamics.AerodynamicCalculator;
 import net.sf.openrocket.aerodynamics.LookupCalculator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -82,13 +83,23 @@ public class SimulationOptions implements ChangeSource, Cloneable {
 	private int randomSeed = new Random().nextInt();
 	
 	private boolean calculateExtras = true;
-	
-	
+
+	// By default, the aerodynamic calculator used is the Barrowman Calculator.
+	private AerodynamicCalculator aerodynamicCalculator = new BarrowmanCalculator();
+
 	private List<EventListener> listeners = new ArrayList<EventListener>();
 	
 	public SimulationOptions() {
 	}
-	
+
+	/**
+	 * Extension: Set's the aerodynamic calculator at runtime. By default, this is set as the BarrowmanCalculator.
+	 * @param calculator The aerodynamic calculator we want to use.
+	 */
+	public void setAerodynamicCalculator(AerodynamicCalculator calculator) {
+		this.aerodynamicCalculator = calculator;
+	}
+
 	public double getLaunchRodLength() {
 		return launchRodLength;
 	}
@@ -98,8 +109,8 @@ public class SimulationOptions implements ChangeSource, Cloneable {
 			return;
 		this.launchRodLength = launchRodLength;
 	}
-	
-	
+
+
 	public boolean getLaunchIntoWind() {
 		return launchIntoWind;
 	}
@@ -565,8 +576,7 @@ public class SimulationOptions implements ChangeSource, Cloneable {
 		
 		conditions.setGravityModel(gravityModel);
 		
-//		conditions.setAerodynamicCalculator(new BarrowmanCalculator());
-		conditions.setAerodynamicCalculator(new LookupCalculator());
+		conditions.setAerodynamicCalculator(aerodynamicCalculator);
 		conditions.setMassCalculator(new MassCalculator());
 		
 		conditions.setTimeStep(getTimeStep());
