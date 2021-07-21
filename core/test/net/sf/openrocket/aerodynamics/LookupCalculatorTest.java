@@ -71,11 +71,15 @@ public class LookupCalculatorTest {
 
         // Set coefficients to something valid
         lookupCalculator.setAeroCoefficients(validCoefficientsFile);
+        // Facade should be non-null now
+        assertNotNull(lookupCalculator.getAeroCoefficientsFacade());
 
         // Set the aero coefficients to something invalid
         assertThrows(IllegalArgumentException.class, () -> {
             lookupCalculator.setAeroCoefficients(invalidCoefficientsFile);
         });
+        // Facade should be null again after setting aero coefficients to something invalid
+        assertNull(lookupCalculator.getAeroCoefficientsFacade());
 
         // Assert that getAerodynamicForces still throws an IllegalStateException
         assertThrows(IllegalStateException.class, () -> {
