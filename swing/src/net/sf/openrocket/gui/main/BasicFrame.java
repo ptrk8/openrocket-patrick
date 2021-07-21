@@ -833,6 +833,40 @@ public class BasicFrame extends JFrame {
 		});
 		menu.add(item);
 
+		////  Extensions
+		menu = new JMenu(trans.get("main.menu.extensions"));
+//		menu.setMnemonic(KeyEvent.VK_X); // This gives the menu item a keyboard shortcut
+		//// File-handling related tasks
+		menu.getAccessibleContext().setAccessibleDescription(trans.get("main.menu.file.desc"));
+		menubar.add(menu);
+
+		//// Extensions - Load Aero Coefficients
+		item = new JMenuItem(trans.get("main.menu.extensions.coefficients"));
+		item.setIcon(Icons.FILE_OPEN);
+		item.getAccessibleContext().setAccessibleDescription(trans.get("main.menu.extensions.coefficients.desc"));
+		item.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				log.info(Markers.USER_MARKER, "Load Aero Coefficients... selected");
+				openAction();
+			}
+		});
+		menu.add(item);
+
+//		//// Open...
+//		item = new JMenuItem(trans.get("main.menu.file.open"), KeyEvent.VK_O);
+//		item.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, SHORTCUT_KEY));
+//		//// Open a rocket design
+//		item.getAccessibleContext().setAccessibleDescription(trans.get("main.menu.file.open.desc"));
+//		item.setIcon(Icons.FILE_OPEN);
+//		item.addActionListener(new ActionListener() {
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				log.info(Markers.USER_MARKER, "Open... selected");
+//				openAction();
+//			}
+//		});
+//		menu.add(item);
 
 		this.setJMenuBar(menubar);
 	}
