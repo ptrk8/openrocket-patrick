@@ -86,7 +86,7 @@ public class SimulationRunDialog extends JDialog {
 		});
 	}
 
-	private final JLabel simLabel, timeLabel, altLabel, velLabel;
+	private final JLabel simLabel, timeLabel, altLabel, velLabel, calcLabel;
 	private final JProgressBar progressBar;
 
 	/*
@@ -141,6 +141,18 @@ public class SimulationRunDialog extends JDialog {
 		//// Running ...
 		simLabel = new JLabel(trans.get("SimuRunDlg.lbl.Running"));
 		panel.add(simLabel, "spanx, wrap para");
+
+		//================================================================================
+		// Beginning of modification
+		//================================================================================
+		//// Calculator:
+		panel.add(new JLabel("Aero Forces Calculator:"), "gapright para");
+		calcLabel = new JLabel("");
+		panel.add(calcLabel, "growx, wmin 200lp, wrap rel");
+		//================================================================================
+		// End of modification
+		//================================================================================
+
 		//// Simulation time:
 		panel.add(new JLabel(trans.get("SimuRunDlg.lbl.Simutime") + " "), "gapright para");
 		timeLabel = new JLabel("");
@@ -243,6 +255,14 @@ public class SimulationRunDialog extends JDialog {
 			velLabel.setText("");
 			return;
 		}
+
+		//================================================================================
+		// Beginning of modification
+		//================================================================================
+		calcLabel.setText(simulationStatuses[index].getSimulationConditions().getAerodynamicCalculator().toString());
+		//================================================================================
+		// End of modification
+		//================================================================================
 
 		Unit u = UnitGroup.UNITS_FLIGHT_TIME.getDefaultUnit();
 		timeLabel.setText(u.toStringUnit(simulationStatuses[index].getSimulationTime()));
