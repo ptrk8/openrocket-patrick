@@ -116,6 +116,7 @@
 			<zipfileset src="${core.dir}/lib/jackson-annotations-2.12.4.jar"/>
 			<zipfileset src="${core.dir}/lib/jackson-core-2.12.4.jar"/>
 			<zipfileset src="${core.dir}/lib/jackson-databind-2.12.4.jar"/>
+			<zipfileset src="${core.dir}/lib/javafx-base-16-mac.jar"/>
 
 			<!-- JOGL libraries need to be jar-in-jar -->
 			<zipfileset dir="${lib.dir}/jogl" prefix="lib">

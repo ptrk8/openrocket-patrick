@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
+import javafx.beans.property.SimpleObjectProperty;
 import net.sf.openrocket.aerodynamics.coefficients.CoefficientsInterpolatorBilinear;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,10 +50,20 @@ public class LookupCalculator extends AbstractAerodynamicCalculator {
 	private double cacheDiameter = -1;
 	private double cacheLength = -1;
 
-	private AerodynamicCoefficients aeroCoefficients;
+	private final SimpleObjectProperty<AerodynamicCoefficients> aeroCoefficientsProperty = new SimpleObjectProperty<>();
 	private AerodynamicCoefficientsFacade aeroCoefficientsFacade;
 
 	public LookupCalculator() {
+		aeroCoefficientsProperty.addListener((observableValue, oldValue, newValue) -> {
+			if (newValue == null) {
+				aeroCoefficientsFacade = null;
+				return;
+			}
+			aeroCoefficientsFacade = new AerodynamicCoefficientsFacadeImpl(
+				aeroCoefficientsProperty.getValue(),
+				new CoefficientsInterpolatorBilinear()
+			);
+		});
 	}
 
 
@@ -180,7 +191,8 @@ public class LookupCalculator extends AbstractAerodynamicCalculator {
 	public AerodynamicForces getAerodynamicForces(FlightConfiguration configuration,
 		FlightConditions conditions, WarningSet warnings) {
 
-		if (aeroCoefficients == null) {
+		AerodynamicCoefficients aeroCoefficients = aeroCoefficientsProperty.getValue();
+		if (aeroCoefficientsFacade == null || aeroCoefficients == null) {
 			throw new IllegalStateException("Aerodynamic coefficients have not been set for the Lookup Calculator.");
 		}
 
@@ -256,22 +268,24 @@ public class LookupCalculator extends AbstractAerodynamicCalculator {
 
 	public void setAeroCoefficients(File aeroCoefficientsFile) {
 		try {
-			aeroCoefficients = new ObjectMapper().readValue(
-				aeroCoefficientsFile,
-				AerodynamicCoefficientsImpl.class
+			aeroCoefficientsProperty.set(
+				new ObjectMapper().readValue(
+					aeroCoefficientsFile,
+					AerodynamicCoefficientsImpl.class
+				)
 			);
 		} catch (IOException exception) {
-			aeroCoefficients = null;
+			aeroCoefficientsProperty.set(null);
 			throw new IllegalArgumentException("Invalid Aerodynamic Coefficients file provided.", exception);
 		}
-		aeroCoefficientsFacade = new AerodynamicCoefficientsFacadeImpl(
-			aeroCoefficients,
-			new CoefficientsInterpolatorBilinear()
-		);
 	}
 
 	public AerodynamicCoefficients getAeroCoefficients() {
-		return aeroCoefficients;
+		return aeroCoefficientsProperty.getValue();
+	}
+
+	public AerodynamicCoefficientsFacade getAeroCoefficientsFacade() {
+		return aeroCoefficientsFacade;
 	}
 
 	//================================================================================

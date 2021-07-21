@@ -34,5 +34,6 @@
 	<classpathentry kind="lib" path="lib/jackson-annotations-2.12.4.jar"/>
 	<classpathentry kind="lib" path="lib/jackson-core-2.12.4.jar"/>
 	<classpathentry kind="lib" path="lib/jackson-databind-2.12.4.jar"/>
+	<classpathentry kind="lib" path="lib/javafx-base-16-mac.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
