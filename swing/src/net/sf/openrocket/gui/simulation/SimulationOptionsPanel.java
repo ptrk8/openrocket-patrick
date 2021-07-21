@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dialog.ModalityType;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -13,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -24,6 +26,9 @@ import javax.swing.MenuElement;
 import javax.swing.SwingUtilities;
 
 import net.miginfocom.swing.MigLayout;
+import net.sf.openrocket.aerodynamics.AerodynamicCalculator;
+import net.sf.openrocket.aerodynamics.BarrowmanCalculator;
+import net.sf.openrocket.aerodynamics.LookupCalculator;
 import net.sf.openrocket.document.OpenRocketDocument;
 import net.sf.openrocket.document.Simulation;
 import net.sf.openrocket.gui.SpinnerEditor;
@@ -86,18 +91,77 @@ class SimulationOptionsPanel extends JPanel {
 		// Separate panel for computation methods, as they use a different
 		// layout
 		subsub = new JPanel(new MigLayout("insets 0, fill", "[grow][min!][min!][]"));
-		
-		// // Calculation method:
-		tip = trans.get("simedtdlg.lbl.ttip.Calcmethod");
-		label = new JLabel(trans.get("simedtdlg.lbl.Calcmethod"));
-		label.setToolTipText(tip);
+
+		//================================================================================
+		// Beginning of my LookupCalculator GUI Modification
+		//================================================================================
+
+		// // Calculation method switcher
+		label = new JLabel("Aero Forces Calculator");
+		label.setToolTipText("Choose which aerodynamic forces calculator you wish to use.");
 		subsub.add(label, "gapright para");
-		
-		// // Extended Barrowman
-		label = new JLabel(trans.get("simedtdlg.lbl.ExtBarrowman"));
-		label.setToolTipText(tip);
-		subsub.add(label, "growx, span 3, wrap");
-		
+
+		LookupCalculator lookupCalculator = new LookupCalculator();
+		BarrowmanCalculator barrowmanCalculator = new BarrowmanCalculator();
+
+		JFileChooser fileChooser = new JFileChooser();
+
+		AerodynamicCalculator[] calculators = new AerodynamicCalculator[]{
+			barrowmanCalculator,
+			lookupCalculator
+		};
+
+		JComboBox<AerodynamicCalculator> calcMethodCombo = new JComboBox<>(calculators);
+		ActionListener calcMethodListener = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JComboBox<AerodynamicCalculator> cb = (JComboBox<AerodynamicCalculator>) e.getSource();
+				AerodynamicCalculator selectedCalculator = (AerodynamicCalculator) cb.getSelectedItem();
+				// If the user selects a lookup calculator, open the file dialog
+				if (selectedCalculator instanceof LookupCalculator) {
+					int returnVal = fileChooser.showOpenDialog(SimulationOptionsPanel.this);
+					if (returnVal == JFileChooser.APPROVE_OPTION) {
+						File file = fileChooser.getSelectedFile();
+						// Try to load the new file
+						try {
+							lookupCalculator.setAeroCoefficients(file);
+						} catch (IllegalArgumentException exception) {
+							// If it is an invalid file, set the selected item to Barrowman and throw an exception
+							calcMethodCombo.setSelectedItem(barrowmanCalculator);
+							conditions.setAerodynamicCalculator(barrowmanCalculator);
+							throw exception;
+						}
+					} else if (returnVal == JFileChooser.CANCEL_OPTION) {
+						// If user decides to cancel, then set the calculator back to Barrowman
+						calcMethodCombo.setSelectedItem(barrowmanCalculator);
+						conditions.setAerodynamicCalculator(barrowmanCalculator);
+						throw new IllegalArgumentException("No Aerodynamic Coefficients file was chosen. Reverting to Barrowman Calculator.");
+					}
+				}
+				conditions.setAerodynamicCalculator(selectedCalculator);
+			}
+		};
+		calcMethodCombo.addActionListener(calcMethodListener);
+		// By default, Barrowman calculator should be selected
+		calcMethodCombo.setSelectedItem(barrowmanCalculator);
+		subsub.add(calcMethodCombo, "span 3, wrap");
+
+
+		//================================================================================
+		// End of my LookupCalculator GUI Modification
+		//================================================================================
+
+//		// // Calculation method:
+//		tip = trans.get("simedtdlg.lbl.ttip.Calcmethod");
+//		label = new JLabel(trans.get("simedtdlg.lbl.Calcmethod"));
+//		label.setToolTipText(tip);
+//		subsub.add(label, "gapright para");
+//
+//		// // Extended Barrowman
+//		label = new JLabel(trans.get("simedtdlg.lbl.ExtBarrowman"));
+//		label.setToolTipText(tip);
+//		subsub.add(label, "growx, span 3, wrap");
+
 		// Simulation method
 		tip = trans.get("simedtdlg.lbl.ttip.Simmethod1")
 				+ trans.get("simedtdlg.lbl.ttip.Simmethod2");

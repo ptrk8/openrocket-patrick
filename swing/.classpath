@@ -30,7 +30,7 @@
 	<classpathentry kind="lib" path="/OpenRocket Core/lib/opencsv-4.3.2.jar"/>
 	<classpathentry kind="lib" path="/OpenRocket Test Libraries/jmock-2.9.0.jar"/>
 	<classpathentry kind="lib" path="/OpenRocket Test Libraries/jmock-junit4-2.9.0.jar"/>
-	<classpathentry kind="lib" path="/OpenRocket Test Libraries/junit-4.12.jar"/>
+	<classpathentry kind="lib" path="/OpenRocket Test Libraries/junit-4.13.2.jar"/>
 	<classpathentry kind="lib" path="/OpenRocket Core/lib/jaxb-api.2.3.1.jar"/>
 	<classpathentry kind="lib" path="/OpenRocket Core/lib/jaxb-runtime.2.3.1.jar"/>
 	<classpathentry kind="lib" path="/OpenRocket Core/lib/guava-26.0-jre.jar"/>
