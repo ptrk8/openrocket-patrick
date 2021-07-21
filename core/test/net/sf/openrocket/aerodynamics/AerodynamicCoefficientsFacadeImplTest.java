@@ -22,7 +22,7 @@ public class AerodynamicCoefficientsFacadeImplTest {
         aerodynamicCoefficientsJson = new ObjectMapper().readValue(
             Resources.toString(
                 Resources.getResource(
-                    "extension/coefficients/test-aero-coefficients.json"
+                    "test/coefficients/test-aero-coefficients.json"
                 ),
                 StandardCharsets.UTF_8
             ),

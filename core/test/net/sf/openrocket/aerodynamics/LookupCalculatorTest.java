@@ -7,22 +7,20 @@ import static org.junit.Assert.assertTrue;
 
 import com.google.common.io.Resources;
 import java.io.File;
-import java.io.IOException;
 import java.net.URISyntaxException;
-import java.nio.charset.StandardCharsets;
 import org.junit.Test;
 
 public class LookupCalculatorTest {
 
     File validCoefficientsFile = new File(
         Resources.getResource(
-            "extension/coefficients/test-aero-coefficients.json"
+            "test/coefficients/test-aero-coefficients.json"
         ).toURI()
     );
 
     File invalidCoefficientsFile = new File(
         Resources.getResource(
-            "extension/coefficients/test-aero-coefficients-invalid.json"
+            "test/coefficients/test-aero-coefficients-invalid.json"
         ).toURI()
     );
 
