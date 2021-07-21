@@ -6,7 +6,7 @@ import net.sf.openrocket.aerodynamics.FlightConditions;
 /**
  * Simple equations that just look up the coefficients in our aerodynamic coefficients facade.
  */
-public class AerodynamicForceEquationsSimple extends AerodynamicForceEquationsBase {
+public class AerodynamicForceEquationsSimpleLookup extends AerodynamicForceEquationsBase {
 
     @Override
     public double getCN(FlightConditions conditions, AerodynamicForces currentForces) {

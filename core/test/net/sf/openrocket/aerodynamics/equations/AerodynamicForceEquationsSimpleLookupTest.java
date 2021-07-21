@@ -29,7 +29,7 @@ public class AerodynamicForceEquationsSimpleTest {
 
     @Test
     public void getMethodsShouldThrowErrorIfFacadeNotSet() {
-        AerodynamicForceEquations equations = new AerodynamicForceEquationsSimple();
+        AerodynamicForceEquations equations = new AerodynamicForceEquationsSimpleLookup();
 
         assertThrows(IllegalStateException.class, () -> {
             equations.getCN(conditions, forces);
@@ -63,7 +63,7 @@ public class AerodynamicForceEquationsSimpleTest {
             anyDouble()
         )).thenReturn(expectedValue);
 
-        AerodynamicForceEquations equations = new AerodynamicForceEquationsSimple();
+        AerodynamicForceEquations equations = new AerodynamicForceEquationsSimpleLookup();
         equations.setAerodynamicCoefficientsFacade(aerodynamicCoefficientsFacade);
 
         double actualValue = equations.getCN(conditions, forces);
@@ -79,7 +79,7 @@ public class AerodynamicForceEquationsSimpleTest {
             anyDouble()
         )).thenReturn(expectedValue);
 
-        AerodynamicForceEquations equations = new AerodynamicForceEquationsSimple();
+        AerodynamicForceEquations equations = new AerodynamicForceEquationsSimpleLookup();
         equations.setAerodynamicCoefficientsFacade(aerodynamicCoefficientsFacade);
 
         double actualValue = equations.getCD(conditions, forces);
@@ -95,7 +95,7 @@ public class AerodynamicForceEquationsSimpleTest {
             anyDouble()
         )).thenReturn(expectedValue);
 
-        AerodynamicForceEquations equations = new AerodynamicForceEquationsSimple();
+        AerodynamicForceEquations equations = new AerodynamicForceEquationsSimpleLookup();
         equations.setAerodynamicCoefficientsFacade(aerodynamicCoefficientsFacade);
 
         double actualValue = equations.getCside(conditions, forces);
@@ -111,7 +111,7 @@ public class AerodynamicForceEquationsSimpleTest {
             anyDouble()
         )).thenReturn(expectedValue);
 
-        AerodynamicForceEquations equations = new AerodynamicForceEquationsSimple();
+        AerodynamicForceEquations equations = new AerodynamicForceEquationsSimpleLookup();
         equations.setAerodynamicCoefficientsFacade(aerodynamicCoefficientsFacade);
 
         double actualValue = equations.getCyaw(conditions, forces);
@@ -127,7 +127,7 @@ public class AerodynamicForceEquationsSimpleTest {
             anyDouble()
         )).thenReturn(expectedValue);
 
-        AerodynamicForceEquations equations = new AerodynamicForceEquationsSimple();
+        AerodynamicForceEquations equations = new AerodynamicForceEquationsSimpleLookup();
         equations.setAerodynamicCoefficientsFacade(aerodynamicCoefficientsFacade);
 
         double actualValue = equations.getCm(conditions, forces);
@@ -143,7 +143,7 @@ public class AerodynamicForceEquationsSimpleTest {
             anyDouble()
         )).thenReturn(expectedValue);
 
-        AerodynamicForceEquations equations = new AerodynamicForceEquationsSimple();
+        AerodynamicForceEquations equations = new AerodynamicForceEquationsSimpleLookup();
         equations.setAerodynamicCoefficientsFacade(aerodynamicCoefficientsFacade);
 
         double actualValue = equations.getCroll(conditions, forces);
@@ -159,7 +159,7 @@ public class AerodynamicForceEquationsSimpleTest {
             anyDouble()
         )).thenReturn(expectedValue);
 
-        AerodynamicForceEquations equations = new AerodynamicForceEquationsSimple();
+        AerodynamicForceEquations equations = new AerodynamicForceEquationsSimpleLookup();
         equations.setAerodynamicCoefficientsFacade(aerodynamicCoefficientsFacade);
 
         double actualValue = equations.getCaxial(conditions, forces);
