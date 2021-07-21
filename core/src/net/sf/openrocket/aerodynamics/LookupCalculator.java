@@ -4,6 +4,7 @@ import static net.sf.openrocket.util.MathUtil.pow2;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.io.Resources;
+import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
@@ -52,32 +53,13 @@ public class LookupCalculator extends AbstractAerodynamicCalculator {
 	private AerodynamicCoefficientsFacade aeroCoefficientsFacade;
 
 	public LookupCalculator() {
-		try {
-			aeroCoefficients = new ObjectMapper().readValue(
-				Resources.toString(
-					Resources.getResource(
-                        "extension/coefficients/aero-coefficients_rad.json"
-					),
-					StandardCharsets.UTF_8
-				),
-				AerodynamicCoefficientsImpl.class
-			);
-		} catch (IOException exception) {
-			exception.printStackTrace();
-			log.error(String.format("Failed to parse JSON file"));
-		}
-		aeroCoefficientsFacade = new AerodynamicCoefficientsFacadeImpl(
-			aeroCoefficients,
-			new CoefficientsInterpolatorBilinear()
-		);
 	}
 
 
 	@Override
-	public BarrowmanCalculator newInstance() {
-		return new BarrowmanCalculator();
+	public LookupCalculator newInstance() {
+		return new LookupCalculator();
 	}
-
 
 	/**
 	 * Calculate the CP according to the extended Barrowman method.
@@ -190,9 +172,18 @@ public class LookupCalculator extends AbstractAerodynamicCalculator {
 		return eachForces.get(comp);
 	}
 
+	//================================================================================
+	// Beginning of my Modifications
+	//================================================================================
+
 	@Override
 	public AerodynamicForces getAerodynamicForces(FlightConfiguration configuration,
 		FlightConditions conditions, WarningSet warnings) {
+
+		if (aeroCoefficients == null) {
+			throw new IllegalStateException("Aerodynamic coefficients have not been set for the Lookup Calculator.");
+		}
+
 		checkCache(configuration);
 
 		if (warnings == null)
@@ -258,6 +249,34 @@ public class LookupCalculator extends AbstractAerodynamicCalculator {
 		}
 	}
 
+	@Override
+	public String toString() {
+		return "Lookup Aero Coefficients";
+	}
+
+	public void setAeroCoefficients(File aeroCoefficientsFile) {
+		try {
+			aeroCoefficients = new ObjectMapper().readValue(
+				aeroCoefficientsFile,
+				AerodynamicCoefficientsImpl.class
+			);
+		} catch (IOException exception) {
+			aeroCoefficients = null;
+			throw new IllegalArgumentException("Invalid Aerodynamic Coefficients file provided.", exception);
+		}
+		aeroCoefficientsFacade = new AerodynamicCoefficientsFacadeImpl(
+			aeroCoefficients,
+			new CoefficientsInterpolatorBilinear()
+		);
+	}
+
+	public AerodynamicCoefficients getAeroCoefficients() {
+		return aeroCoefficients;
+	}
+
+	//================================================================================
+	// End of my Modifications
+	//================================================================================
 
 	private AerodynamicForces calculateComponentNonAxialForces( FlightConditions conditions,
 		RocketComponent comp,
@@ -934,9 +953,5 @@ public class LookupCalculator extends AbstractAerodynamicCalculator {
 		return 0;
 	}
 
-	@Override
-	public String toString() {
-		return "Lookup Calculator";
-	}
 
 }

@@ -871,7 +871,7 @@ public class BarrowmanCalculator extends AbstractAerodynamicCalculator {
 
 	@Override
 	public String toString() {
-		return "Barrowman Calculator";
+		return "Extended Barrowman";
 	}
 	
 }
