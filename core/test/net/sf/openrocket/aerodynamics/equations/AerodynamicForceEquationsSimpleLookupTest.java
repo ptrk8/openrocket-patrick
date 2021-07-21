@@ -12,7 +12,7 @@ import net.sf.openrocket.aerodynamics.FlightConditions;
 import org.junit.Before;
 import org.junit.Test;
 
-public class AerodynamicForceEquationsSimpleTest {
+public class AerodynamicForceEquationsSimpleLookupTest {
 
     public final double delta = 0.0000001;
 
