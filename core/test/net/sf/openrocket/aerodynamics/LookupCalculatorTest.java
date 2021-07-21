@@ -1,38 +1,90 @@
 package net.sf.openrocket.aerodynamics;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
 
 import com.google.common.io.Resources;
+import com.google.common.primitives.Doubles;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import com.google.inject.Module;
 import java.io.File;
 import java.net.URISyntaxException;
+import net.sf.openrocket.ServicesForTesting;
+import net.sf.openrocket.plugin.PluginModule;
+import net.sf.openrocket.rocketcomponent.FlightConfiguration;
+import net.sf.openrocket.rocketcomponent.Rocket;
+import net.sf.openrocket.startup.Application;
+import net.sf.openrocket.util.TestRockets;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class LookupCalculatorTest {
 
-    File validCoefficientsFile = new File(
+    File validCoefficientsFileSymmetric = new File(
         Resources.getResource(
-            "test/coefficients/test-aero-coefficients.json"
+            "test/coefficients/test-aero-coefficients-radians.json"
         ).toURI()
     );
 
     File invalidCoefficientsFile = new File(
         Resources.getResource(
-            "test/coefficients/test-aero-coefficients-invalid.json"
+            "test/coefficients/test-aero-coefficients-invalid-radians.json"
         ).toURI()
     );
 
+    Rocket falconHeavy = TestRockets.makeFalcon9Heavy();
+
+    // It is not actually possible to set negative angles of attack in OpenRocket
+    double[] anglesOfAttackLookup = new double[] {
+        0.0,
+        0.08
+    };
+
+    // It is not actually possible to set negative angles of attack in OpenRocket
+    double[] anglesOfAttackBarrowman = new double[] {
+        0.09,
+        0.10,
+        0.12,
+        1.1,
+        2.1,
+        3.0,
+        3.13,
+        Math.PI
+    };
+
+    double[] anglesOfAttackAll = Doubles.concat(anglesOfAttackLookup, anglesOfAttackBarrowman);
+
+    double[] machNumbersLookup = new double[] {
+        0.11,
+        0.2,
+        0.3
+    };
+
+    double[] machNumbersBarrowman = new double[] {
+        0.02,
+        0.03,
+        0.09
+    };
+
+    double[] machNumbersAll = Doubles.concat(machNumbersBarrowman, machNumbersLookup);
+
+    private static Injector injector;
+
+    @BeforeClass
+    public static void setup() {
+        Module applicationModule = new ServicesForTesting();
+        Module pluginModule = new PluginModule();
+
+        injector = Guice.createInjector( applicationModule, pluginModule);
+        Application.setInjector(injector);
+    }
 
     public LookupCalculatorTest() throws
         URISyntaxException {
-    }
-
-    @Test
-    public void getAerodynamicForcesShouldThrowErrorIfNoAeroCoefficientsFacade() {
-
-
     }
 
     @Test
@@ -43,7 +95,7 @@ public class LookupCalculatorTest {
 
         assertNull(lookupCalculator.getAeroCoefficients());
 
-        lookupCalculator.setAeroCoefficients(validCoefficientsFile);
+        lookupCalculator.setAeroCoefficients(validCoefficientsFileSymmetric);
 
         assertNotNull(lookupCalculator.getAeroCoefficients());
     }
@@ -70,7 +122,7 @@ public class LookupCalculatorTest {
         LookupCalculator lookupCalculator = new LookupCalculator();
 
         // Set coefficients to something valid
-        lookupCalculator.setAeroCoefficients(validCoefficientsFile);
+        lookupCalculator.setAeroCoefficients(validCoefficientsFileSymmetric);
         // Facade should be non-null now
         assertNotNull(lookupCalculator.getAeroCoefficientsFacade());
 
@@ -87,6 +139,83 @@ public class LookupCalculatorTest {
         });
     }
 
+    @Test
+    public void getAerodynamicForcesShouldUseLookupTableIfWithinAngleOfAttackRangeAndFastEnough() {
+        LookupCalculator lookupCalculator = new LookupCalculator();
+        lookupCalculator.setAeroCoefficients(validCoefficientsFileSymmetric);
+
+        FlightConfiguration configuration = falconHeavy.getSelectedConfiguration();
+        WarningSet warnings = new WarningSet();
+        FlightConditions conditions = new FlightConditions(configuration);
+
+        for (double angleOfAttack : anglesOfAttackLookup) {
+            for (double machNumber : machNumbersLookup) {
+                conditions.setAOA(angleOfAttack);
+                conditions.setMach(machNumber);
+                AerodynamicForces actualForces = lookupCalculator.getAerodynamicForces(
+                    configuration,
+                    conditions,
+                    warnings
+                );
+                assertNotEquals(
+                    new BarrowmanCalculator().getAerodynamicForces(configuration, conditions, warnings),
+                    actualForces
+                );
+            }
+        }
+    }
+
+    @Test
+    public void getAerodynamicForcesShouldUseBarrowmanIfOutsideAngleOfAttackRange() {
+        LookupCalculator lookupCalculator = new LookupCalculator();
+        lookupCalculator.setAeroCoefficients(validCoefficientsFileSymmetric);
+
+        FlightConfiguration configuration = falconHeavy.getSelectedConfiguration();
+        WarningSet warnings = new WarningSet();
+        FlightConditions conditions = new FlightConditions(configuration);
+
+        for (double angleOfAttack : anglesOfAttackBarrowman) {
+            for (double machNumber : machNumbersAll) {
+                conditions.setAOA(angleOfAttack);
+                conditions.setMach(machNumber);
+                AerodynamicForces actualForces = lookupCalculator.getAerodynamicForces(
+                    configuration,
+                    conditions,
+                    warnings
+                );
+                assertEquals(
+                    new BarrowmanCalculator().getAerodynamicForces(configuration, conditions, warnings),
+                    actualForces
+                );
+            }
+        }
+    }
+
+    @Test
+    public void getAerodynamicForcesShouldUseBarrowmanIfMachNumberTooLow() {
+        LookupCalculator lookupCalculator = new LookupCalculator();
+        lookupCalculator.setAeroCoefficients(validCoefficientsFileSymmetric);
+
+        FlightConfiguration configuration = falconHeavy.getSelectedConfiguration();
+        WarningSet warnings = new WarningSet();
+        FlightConditions conditions = new FlightConditions(configuration);
+
+        for (double angleOfAttack : anglesOfAttackAll) {
+            for (double machNumber : machNumbersBarrowman) {
+                conditions.setAOA(angleOfAttack);
+                conditions.setMach(machNumber);
+                AerodynamicForces actualForces = lookupCalculator.getAerodynamicForces(
+                    configuration,
+                    conditions,
+                    warnings
+                );
+                assertEquals(
+                    new BarrowmanCalculator().getAerodynamicForces(configuration, conditions, warnings),
+                    actualForces
+                );
+            }
+        }
+    }
 
 
 }
