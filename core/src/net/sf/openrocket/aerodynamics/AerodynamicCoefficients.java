@@ -21,6 +21,16 @@ public interface AerodynamicCoefficients {
 
     List<BigDecimal> getCoefficientSideForceList();
 
+    List<BigDecimal> getCoefficientSideForceAlphaDerivativeList();
+
+    List<BigDecimal> getCoefficientAxialForceBetaDerivativeList();
+
+    List<BigDecimal> getCoefficientSideForceBetaDerivativeList();
+
+    List<BigDecimal> getCoefficientPitchingMomentAlphaDerivativeList();
+
+    List<BigDecimal> getCoefficientRollingMomentBetaDerivativeList();
+
     BigDecimal getAngleOfAttackMin();
 
     BigDecimal getAngleOfAttackMax();

@@ -39,7 +39,7 @@ public class AerodynamicForceEquationsNoChangesTest {
     }
 
     @Test
-    public void getCNShouldReturnCurrentForces() {
+    public void getCNShouldReturnOriginalForce() {
         double expectedValue = 100.2;
         double lookupValue = 12.3;
 
@@ -60,7 +60,7 @@ public class AerodynamicForceEquationsNoChangesTest {
     }
 
     @Test
-    public void getCDShouldReturnCurrentForces() {
+    public void getCDShouldReturnOriginalForce() {
         double expectedValue = 100.2;
         double lookupValue = 11.3;
 
@@ -81,7 +81,7 @@ public class AerodynamicForceEquationsNoChangesTest {
     }
 
     @Test
-    public void getCsideShouldReturnCurrentForces() {
+    public void getCsideShouldReturnOriginalForce() {
         double expectedValue = 100.2;
         double lookupValue = 32.2;
 
@@ -102,7 +102,7 @@ public class AerodynamicForceEquationsNoChangesTest {
     }
 
     @Test
-    public void getCyawShouldReturnCurrentForces() {
+    public void getCyawShouldReturnOriginalForce() {
         double expectedValue = 100.2;
         double lookupValue = 2.2;
 
@@ -123,7 +123,7 @@ public class AerodynamicForceEquationsNoChangesTest {
     }
 
     @Test
-    public void getCmShouldReturnCurrentForces() {
+    public void getCmShouldReturnOriginalForce() {
         double expectedValue = 100.2;
         double lookupValue = 23.2;
 
@@ -144,7 +144,7 @@ public class AerodynamicForceEquationsNoChangesTest {
     }
 
     @Test
-    public void getCrollShouldReturnCurrentForces() {
+    public void getCrollShouldReturnOriginalForce() {
         double expectedValue = 100.2;
         double lookupValue = 23.2;
 
@@ -165,7 +165,7 @@ public class AerodynamicForceEquationsNoChangesTest {
     }
 
     @Test
-    public void getCaxialShouldReturnCurrentForces() {
+    public void getCaxialShouldReturnOriginalForce() {
         double expectedValue = 100.2;
         double lookupValue = 3.2;
 

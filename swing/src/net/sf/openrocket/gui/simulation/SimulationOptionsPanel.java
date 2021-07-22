@@ -29,6 +29,7 @@ import net.miginfocom.swing.MigLayout;
 import net.sf.openrocket.aerodynamics.AerodynamicCalculator;
 import net.sf.openrocket.aerodynamics.BarrowmanCalculator;
 import net.sf.openrocket.aerodynamics.LookupCalculator;
+import net.sf.openrocket.aerodynamics.equations.AerodynamicForceEquationsSimpleLookup;
 import net.sf.openrocket.document.OpenRocketDocument;
 import net.sf.openrocket.document.Simulation;
 import net.sf.openrocket.gui.SpinnerEditor;
@@ -101,7 +102,7 @@ class SimulationOptionsPanel extends JPanel {
 		label.setToolTipText("Choose which aerodynamic forces calculator you wish to use.");
 		subsub.add(label, "gapright para");
 
-		LookupCalculator lookupCalculator = new LookupCalculator();
+		LookupCalculator lookupCalculator = new LookupCalculator(new AerodynamicForceEquationsSimpleLookup());
 		BarrowmanCalculator barrowmanCalculator = new BarrowmanCalculator();
 
 		JFileChooser fileChooser = new JFileChooser();
