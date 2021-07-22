@@ -66,7 +66,6 @@ public class LookupCalculator extends AbstractAerodynamicCalculator {
 				aeroCoefficientsProperty.getValue(),
 				new CoefficientsInterpolatorBilinear()
 			);
-			System.out.println(aeroForceEquations);
 			aeroForceEquations.setAerodynamicCoefficientsFacade(aeroCoefficientsFacade);
 		});
 	}
