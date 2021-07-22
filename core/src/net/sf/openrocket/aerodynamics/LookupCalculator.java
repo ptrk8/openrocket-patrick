@@ -12,6 +12,7 @@ import java.util.*;
 
 import javafx.beans.property.SimpleObjectProperty;
 import net.sf.openrocket.aerodynamics.coefficients.CoefficientsInterpolatorBilinear;
+import net.sf.openrocket.aerodynamics.equations.AerodynamicForceEquations;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,8 +53,10 @@ public class LookupCalculator extends AbstractAerodynamicCalculator {
 
 	private final SimpleObjectProperty<AerodynamicCoefficients> aeroCoefficientsProperty = new SimpleObjectProperty<>();
 	private AerodynamicCoefficientsFacade aeroCoefficientsFacade;
+	private final AerodynamicForceEquations aeroForceEquations;
 
-	public LookupCalculator() {
+	public LookupCalculator(AerodynamicForceEquations aeroForceEquations) {
+		this.aeroForceEquations = aeroForceEquations;
 		aeroCoefficientsProperty.addListener((observableValue, oldValue, newValue) -> {
 			if (newValue == null) {
 				aeroCoefficientsFacade = null;
@@ -63,13 +66,14 @@ public class LookupCalculator extends AbstractAerodynamicCalculator {
 				aeroCoefficientsProperty.getValue(),
 				new CoefficientsInterpolatorBilinear()
 			);
+			aeroForceEquations.setAerodynamicCoefficientsFacade(aeroCoefficientsFacade);
 		});
 	}
 
 
 	@Override
 	public LookupCalculator newInstance() {
-		return new LookupCalculator();
+		return new LookupCalculator(aeroForceEquations);
 	}
 
 	/**
@@ -230,34 +234,22 @@ public class LookupCalculator extends AbstractAerodynamicCalculator {
 			return total;
 		} else {
 			// Calculate non-axial force data
-			AerodynamicForces total = calculateNonAxialForces(configuration, conditions, warnings);
+			AerodynamicForces currentForces = calculateNonAxialForces(configuration, conditions, warnings);
 
-			double aoa = conditions.getAOA();
-			double mach = conditions.getMach();
-
-			double coefficientLift = aeroCoefficientsFacade.getCoefficientLift(mach, aoa);
-			double coefficientDrag = aeroCoefficientsFacade.getCoefficientDrag(mach, aoa);
-			double coefficientAxialForce = aeroCoefficientsFacade.getCoefficientAxialForce(mach, aoa);
-			double coefficientSideForce = aeroCoefficientsFacade.getCoefficientSideForce(mach, aoa);
-			double coefficientPitchingMoment = aeroCoefficientsFacade.getCoefficientPitchingMoment(mach, aoa);
-			double coefficientRollingMoment = aeroCoefficientsFacade.getCoefficientRollingMoment(mach, aoa);
-
-			total.setCN(coefficientLift);
-			total.setCD(coefficientDrag);
-			total.setCside(coefficientAxialForce);
-			total.setCyaw(coefficientSideForce);
-			total.setCm(coefficientPitchingMoment);
-			total.setCroll(coefficientRollingMoment);
-
-			// Set Caxial (as mul*CD where mul = func(aoa))
-			total.setCaxial(coefficientDrag);
+			currentForces.setCN(aeroForceEquations.getCN(conditions, currentForces));
+			currentForces.setCD(aeroForceEquations.getCD(conditions, currentForces));
+			currentForces.setCside(aeroForceEquations.getCside(conditions, currentForces));
+			currentForces.setCyaw(aeroForceEquations.getCyaw(conditions, currentForces));
+			currentForces.setCm(aeroForceEquations.getCm(conditions, currentForces));
+			currentForces.setCroll(aeroForceEquations.getCroll(conditions, currentForces));
+			currentForces.setCaxial(aeroForceEquations.getCaxial(conditions, currentForces));
 
 			// Calculate damping coefficients for yaw and pitch
-			calculateDampingMoments(configuration, conditions, total);
-			total.setCm(total.getCm() - total.getPitchDampingMoment());
-			total.setCyaw(total.getCyaw() - total.getYawDampingMoment());
+			calculateDampingMoments(configuration, conditions, currentForces);
+			currentForces.setCm(currentForces.getCm() - currentForces.getPitchDampingMoment());
+			currentForces.setCyaw(currentForces.getCyaw() - currentForces.getYawDampingMoment());
 
-			return total;
+			return currentForces;
 		}
 	}
 

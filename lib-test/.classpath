@@ -11,5 +11,9 @@
 	<classpathentry kind="lib" path="jmock-2.9.0.jar"/>
 	<classpathentry kind="lib" path="jmock-junit4-2.9.0.jar"/>
 	<classpathentry kind="lib" path="junit-4.13.2.jar"/>
+	<classpathentry kind="lib" path="byte-buddy-1.11.3.jar"/>
+	<classpathentry kind="lib" path="byte-buddy-agent-1.11.3.jar"/>
+	<classpathentry kind="lib" path="mockito-core-3.11.2.jar"/>
+	<classpathentry kind="lib" path="objenesis-3.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
