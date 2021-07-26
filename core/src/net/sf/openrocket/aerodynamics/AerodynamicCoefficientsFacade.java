@@ -1,5 +1,8 @@
 package net.sf.openrocket.aerodynamics;
 
+import java.util.Map;
+import net.sf.openrocket.aerodynamics.coefficients.CoefficientsMap;
+
 /**
  * Represents the interface for our Coefficients facade.
  */
@@ -125,4 +128,10 @@ public interface AerodynamicCoefficientsFacade {
         double machNumber,
         double angleOfAttack
     );
+
+    /**
+     * Simple accessor to retrieve all of the coefficients stored in memory.
+     * @return Map of the coefficient's name and the corresponding coefficients map.
+     */
+    Map<String, CoefficientsMap> getCoefficients();
 }

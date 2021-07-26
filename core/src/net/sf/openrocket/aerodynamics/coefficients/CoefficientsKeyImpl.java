@@ -1,6 +1,8 @@
 package net.sf.openrocket.aerodynamics.coefficients;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Represents a concrete implementation of our CoefficientsKey interface.
@@ -104,5 +106,21 @@ public class CoefficientsKeyImpl implements CoefficientsKey {
     public boolean isStrictlyGreaterThan(CoefficientsKey o) {
         return this.getMachNumber().compareTo(o.getMachNumber()) > 0 &&
             this.getAngleOfAttack().compareTo(o.getAngleOfAttack()) > 0;
+    }
+
+    @Override
+    public List<String> getHeaders() {
+        return Arrays.asList(
+            "aoa",
+            "mach"
+        );
+    }
+
+    @Override
+    public List<String> getValues() {
+        return Arrays.asList(
+            angleOfAttack.toPlainString(),
+            machNumber.toPlainString()
+        );
     }
 }

@@ -5,7 +5,7 @@ import net.sf.openrocket.util.Coordinate;
 /**
  * Interface representing the flight status telemetry.
  */
-public interface TelemetryStatus extends TelemetryDataSegment {
+public interface TelemetryStatus extends TelemetryDataSegment, WriterRowComponent {
 
     /**
      * @return The flight time.

@@ -1,6 +1,7 @@
 package net.sf.openrocket.aerodynamics.coefficients;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,4 +29,9 @@ public interface CoefficientsMap {
     BigDecimal getCoefficientInterpolated(
         CoefficientsKey key
     );
+
+    /**
+     * @return CoefficientsMap as a list of rows.
+     */
+    List<CoefficientsMapRow> getList();
 }

@@ -1,9 +1,8 @@
 package net.sf.openrocket.simulation.listeners.telemetry;
 
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import net.sf.openrocket.simulation.SimulationStatus;
 import net.sf.openrocket.util.Coordinate;
@@ -37,8 +36,6 @@ public class TelemetryStatusImpl implements TelemetryStatus {
 
     @Override
     public Map<String, String> getTelemetryDataMap() {
-//        DecimalFormat df = new DecimalFormat("#.########");
-//        df.setRoundingMode(RoundingMode.HALF_UP);
         Map<String, String> dataMap = new LinkedHashMap<>();
         dataMap.put("time", String.valueOf(getTime()));
         dataMap.put("position_x", String.valueOf(position.x));
@@ -72,5 +69,15 @@ public class TelemetryStatusImpl implements TelemetryStatus {
         result = 31 * result + getPosition().hashCode();
         result = 31 * result + getVelocity().hashCode();
         return result;
+    }
+
+    @Override
+    public List<String> getHeaders() {
+        return new ArrayList<>(getTelemetryDataMap().keySet());
+    }
+
+    @Override
+    public List<String> getValues() {
+        return new ArrayList<>(getTelemetryDataMap().values());
     }
 }

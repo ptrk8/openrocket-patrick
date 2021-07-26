@@ -1,6 +1,8 @@
 package net.sf.openrocket.aerodynamics;
 
 import java.math.BigDecimal;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import net.sf.openrocket.aerodynamics.coefficients.CoefficientsInterpolator;
 import net.sf.openrocket.aerodynamics.coefficients.CoefficientsKeyImpl;
 import net.sf.openrocket.aerodynamics.coefficients.CoefficientsMap;
@@ -216,5 +218,22 @@ public class AerodynamicCoefficientsFacadeImpl implements AerodynamicCoefficient
                 new BigDecimal(angleOfAttack)
             )
         ).doubleValue();
+    }
+
+    @Override
+    public Map<String, CoefficientsMap> getCoefficients() {
+        Map<String, CoefficientsMap> coefficients = new LinkedHashMap<>();
+        coefficients.put("coefficients_lift", coefficientsLift);
+        coefficients.put("coefficients_pitching_moment", coefficientsPitchingMoment);
+        coefficients.put("coefficients_rolling_moment", coefficientsRollingMoment);
+        coefficients.put("coefficients_drag", coefficientsDrag);
+        coefficients.put("coefficients_axial_force", coefficientsAxialForce);
+        coefficients.put("coefficients_side_force", coefficientsSideForce);
+        coefficients.put("coefficients_side_force_alpha_derivative", coefficientsSideForceAlphaDerivative);
+        coefficients.put("coefficients_axial_force_beta_derivative", coefficientsAxialForceBetaDerivative);
+        coefficients.put("coefficients_side_force_beta_derivative", coefficientsSideForceBetaDerivative);
+        coefficients.put("coefficients_pitching_moment_alpha_derivative", coefficientsPitchingMomentAlphaDerivative);
+        coefficients.put("coefficients_rolling_moment_beta_derivative", coefficientsRollingMomentBetaDerivative);
+        return coefficients;
     }
 }

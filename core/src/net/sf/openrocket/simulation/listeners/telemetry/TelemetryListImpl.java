@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class TelemetryListImpl implements TelemetryList {
 
-    Map<TelemetryStatus, TelemetryBasket> telemetryBasketMap = new LinkedHashMap<>();
+    private final Map<TelemetryStatus, TelemetryBasket> telemetryBasketMap = new LinkedHashMap<>();
 
     public TelemetryListImpl() {
     }
@@ -48,6 +48,23 @@ public class TelemetryListImpl implements TelemetryList {
             );
         }
     }
+
+    @Override
+    public List<TelemetryListRow> getList() {
+        List<TelemetryListRow> telemetryDataRowList = new ArrayList<>();
+        for (Map.Entry<TelemetryStatus, TelemetryBasket> entry : telemetryBasketMap.entrySet()) {
+            TelemetryStatus status = entry.getKey();
+            TelemetryBasket basket = entry.getValue();
+            telemetryDataRowList.add(
+                new TelemetryListRowImpl(
+                    status,
+                    basket
+                )
+            );
+        }
+        return telemetryDataRowList;
+    }
+
 
 
 }

@@ -2,6 +2,7 @@ package net.sf.openrocket.aerodynamics.coefficients;
 
 import com.google.common.collect.Ordering;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -79,6 +80,20 @@ public class CoefficientsMapImpl implements CoefficientsMap {
         }
         value += "--------------------\n";
         return value;
+    }
+
+    @Override
+    public List<CoefficientsMapRow> getList() {
+        List<CoefficientsMapRow> list = new ArrayList<>();
+        for (Map.Entry<CoefficientsKey, BigDecimal> entry : coefficients.entrySet()) {
+            list.add(
+                new CoefficientsMapRowImpl(
+                    entry.getKey(),
+                    entry.getValue()
+                )
+            );
+        }
+        return list;
     }
 
 }

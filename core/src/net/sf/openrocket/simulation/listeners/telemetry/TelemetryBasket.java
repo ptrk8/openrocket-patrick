@@ -3,7 +3,7 @@ package net.sf.openrocket.simulation.listeners.telemetry;
 /**
  * Interface that represents the "value" portion of our Telemetry map, which is stored in TelemetryList.
  */
-public interface TelemetryBasket {
+public interface TelemetryBasket extends WriterRowComponent {
 
     /**
      * @param forces The aerodynamic forces telemetry.

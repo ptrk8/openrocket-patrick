@@ -1,5 +1,8 @@
 package net.sf.openrocket.simulation.listeners.telemetry;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TelemetryBasketImpl implements TelemetryBasket {
 
     private TelemetryAerodynamicForces forces;
@@ -31,5 +34,21 @@ public class TelemetryBasketImpl implements TelemetryBasket {
     @Override
     public TelemetryFlightConditions getTelemetryFlightConditions() {
         return conditions;
+    }
+
+    @Override
+    public List<String> getHeaders() {
+        List<String> headers = new ArrayList<>(conditions.getHeaders());
+        headers.add("");
+        headers.addAll(forces.getHeaders());
+        return headers;
+    }
+
+    @Override
+    public List<String> getValues() {
+        List<String> values = new ArrayList<>(conditions.getValues());
+        values.add("");
+        values.addAll(forces.getValues());
+        return values;
     }
 }

@@ -1,11 +1,13 @@
 package net.sf.openrocket.aerodynamics.coefficients;
 
 import java.math.BigDecimal;
+import net.sf.openrocket.simulation.listeners.telemetry.WriterRowComponent;
 
 /**
  * Interface that represents the composite key for our coefficients Map.
  */
-public interface CoefficientsKey extends Comparable<CoefficientsKey> {
+public interface CoefficientsKey extends Comparable<CoefficientsKey>,
+    WriterRowComponent {
 
     /**
      * @return The angle of attack portion of the composite key.

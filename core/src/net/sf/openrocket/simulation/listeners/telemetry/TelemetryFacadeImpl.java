@@ -2,18 +2,20 @@ package net.sf.openrocket.simulation.listeners.telemetry;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 import java.util.Map;
 import net.sf.openrocket.aerodynamics.AerodynamicCalculator;
 import net.sf.openrocket.aerodynamics.LookupCalculator;
+import net.sf.openrocket.aerodynamics.coefficients.CoefficientsMap;
+import net.sf.openrocket.aerodynamics.equations.AerodynamicForceEquations;
 
 public class TelemetryFacadeImpl implements TelemetryFacade {
 
     private final TelemetryList telemetryList;
-    private String filePath;
     private final AerodynamicCalculator aerodynamicCalculator;
+
+    private final Writer csvWriter = new WriterCsv();
+    private File directory;
 
     public TelemetryFacadeImpl(AerodynamicCalculator aerodynamicCalculator) {
         telemetryList = new TelemetryListImpl();
@@ -39,59 +41,62 @@ public class TelemetryFacadeImpl implements TelemetryFacade {
         return aerodynamicCalculator;
     }
 
-    private List<TelemetryDataRow> getTelemetryDataList() {
-        List<TelemetryDataRow> telemetryDataRowList = new ArrayList<>();
-        for (Map.Entry<TelemetryStatus, TelemetryBasket> entry : telemetryList.getTelemetryBasketMap().entrySet()) {
-            TelemetryStatus status = entry.getKey();
-            TelemetryBasket basket = entry.getValue();
-            telemetryDataRowList.add(
-                new TelemetryDataRowImpl(
-                    status,
-                    basket.getTelemetryAerodynamicForces(),
-                    basket.getTelemetryFlightConditions()
-                )
+    @Override
+    public void setDirectory(String directoryName) {
+        String downloadsDir = System.getProperty("user.home") + File.separatorChar + "Downloads";
+        directory = new File(downloadsDir + File.separatorChar + directoryName);
+        if (directory.exists()) {
+            throw new IllegalArgumentException(
+                String.format("Error: %s already exists.", directory.getAbsolutePath())
             );
         }
-        return telemetryDataRowList;
-    }
-
-    private List<List<String>> getCsvRows(List<TelemetryDataRow> telemetryDataRowList) {
-        List<List<String>> csvRows = new ArrayList<>();
-        int i = 0;
-        for (TelemetryDataRow dataRow : telemetryDataRowList) {
-            if (i == 0) {
-                csvRows.add(dataRow.getHeaders());
-            }
-            csvRows.add(dataRow.getValues());
-            i++;
-        }
-        return csvRows;
-    }
-
-    private void setFilePath(String filePath) {
-        this.filePath = filePath;
+        directory.mkdirs();
     }
 
     @Override
-    public String getFilePath() {
-        return filePath;
-    }
-
-    @Override
-    public void printToCsvFile(String fileName) throws
+    public void exportTelemetry() throws
         FileNotFoundException {
+        if (directory == null) {
+            throw new IllegalStateException("Directory has not been set");
+        }
+        File telemetryFile = new File(directory.getAbsolutePath() + File.separatorChar + String.format("telemetry_%d.csv", new Date().getTime()));
+        csvWriter.write(
+            telemetryFile,
+            telemetryList.getList()
+        );
+        System.out.printf(
+            "Finished exporting Telemetry to %s%n",
+            telemetryFile.getAbsolutePath()
+        );
+    }
 
-        List<List<String>> csvRows = getCsvRows(getTelemetryDataList());
+    @Override
+    public void exportCoefficients() throws
+        FileNotFoundException {
+        if (directory == null) {
+            throw new IllegalStateException("Directory has not been set");
+        }
+        // If the aerodynamic calculator is not a lookup calculator, don't print anything
+        if (!(aerodynamicCalculator instanceof LookupCalculator)) {
+            return;
+        }
+        LookupCalculator lookupCalculator = (LookupCalculator) aerodynamicCalculator;
+        AerodynamicForceEquations equations = lookupCalculator.getAeroForceEquations();
 
-        String downloadsDir = String.format("%s/Downloads", System.getProperty("user.home"));
-        String fileNameWithExtension = String.format("%s.csv", fileName);
-        setFilePath(String.format("%s/%s", downloadsDir, fileNameWithExtension));
-
-        File file = new File(getFilePath());
-        PrintWriter printWriter = new PrintWriter(file);
-        csvRows
-            .stream()
-            .map(row -> String.join(",", row))
-            .forEach(printWriter::println);
+        for (Map.Entry<String, CoefficientsMap> entry : equations
+            .getAerodynamicCoefficientsFacade()
+            .getCoefficients()
+            .entrySet()) {
+            String fileNameWithExtension = String.format("%s.csv", entry.getKey());
+            File coefficientsFile = new File(directory.getAbsolutePath() + File.separatorChar + fileNameWithExtension);
+            csvWriter.write(
+                coefficientsFile,
+                entry.getValue().getList()
+            );
+        }
+        System.out.printf(
+            "Finished printing Coefficients to %s%n",
+            directory.getAbsolutePath()
+        );
     }
 }
