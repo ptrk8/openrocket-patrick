@@ -1,5 +1,6 @@
 package net.sf.openrocket.simulation.listeners.telemetry;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import net.sf.openrocket.aerodynamics.AerodynamicCalculator;
 
@@ -23,15 +24,17 @@ public interface TelemetryFacade {
      */
     AerodynamicCalculator getAerodynamicCalculator();
 
-    /**
-     * @return The file path of the telemetry CSV file.
-     */
-    String getFilePath();
+//    /**
+//     * @return The file path of the telemetry CSV file.
+//     */
+//    String getFilePath();
+
+    File getTelemetryFile();
 
     /**
      * @param fileName The name of the file.
      * @throws FileNotFoundException If the file cannot be created.
      */
-    void printToCsvFile(String fileName) throws
+    void printTelemetry(String fileName) throws
         FileNotFoundException;
 }

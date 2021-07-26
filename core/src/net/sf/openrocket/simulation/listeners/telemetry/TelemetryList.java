@@ -1,5 +1,6 @@
 package net.sf.openrocket.simulation.listeners.telemetry;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -24,4 +25,5 @@ public interface TelemetryList {
      */
     void addTelemetryFlightConditions(TelemetryStatus status, TelemetryFlightConditions conditions);
 
+    List<TelemetryListRow> getList();
 }

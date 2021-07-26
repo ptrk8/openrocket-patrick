@@ -35,7 +35,7 @@ public class TelemetryLoggerListener extends AbstractSimulationListener {
 
         try {
             System.out.println("Printing Telemetry to CSV...");
-            telemetryFacade.printToCsvFile(
+            telemetryFacade.printTelemetry(
                 String.format(
                     "%s_%s_%s_%s",
                     dateFormat.format(new Date()),
@@ -50,7 +50,7 @@ public class TelemetryLoggerListener extends AbstractSimulationListener {
         System.out.println(
             String.format(
                 "Finished printing Telemetry to %s",
-                telemetryFacade.getFilePath()
+                telemetryFacade.getTelemetryFile().getAbsolutePath()
             )
         );
     }

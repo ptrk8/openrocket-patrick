@@ -2,24 +2,22 @@ package net.sf.openrocket.simulation.listeners.telemetry;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import net.sf.openrocket.aerodynamics.AerodynamicForces;
 
 public class TelemetryAerodynamicForcesImpl implements TelemetryAerodynamicForces {
 
-    private AerodynamicForces forces;
+    private final Map<String, String> dataMap = new LinkedHashMap<>();
 
     public TelemetryAerodynamicForcesImpl(AerodynamicForces forces) {
-        this.forces = forces.clone();
-    }
+        forces = forces.clone();
 
-    @Override
-    public Map<String, String> getTelemetryDataMap() {
         DecimalFormat df = new DecimalFormat("#.########");
         df.setRoundingMode(RoundingMode.HALF_UP);
-        Map<String, String> dataMap = new LinkedHashMap<>();
+
         dataMap.put("CP_x", df.format(forces.getCP().x));
         dataMap.put("CP_y", df.format(forces.getCP().y));
         dataMap.put("CP_z", df.format(forces.getCP().z));
@@ -38,6 +36,20 @@ public class TelemetryAerodynamicForcesImpl implements TelemetryAerodynamicForce
         dataMap.put("friction_CD", df.format(forces.getFrictionCD()));
         dataMap.put("pitch_damping_moment", df.format(forces.getPitchDampingMoment()));
         dataMap.put("yaw_damping_moment", df.format(forces.getYawDampingMoment()));
+    }
+
+    @Override
+    public Map<String, String> getTelemetryDataMap() {
         return dataMap;
+    }
+
+    @Override
+    public List<String> getHeaders() {
+        return new ArrayList<>(dataMap.keySet());
+    }
+
+    @Override
+    public List<String> getValues() {
+        return new ArrayList<>(dataMap.values());
     }
 }
