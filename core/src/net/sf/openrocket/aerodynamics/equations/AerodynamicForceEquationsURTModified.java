@@ -101,4 +101,9 @@ public class AerodynamicForceEquationsURTModified extends AerodynamicForceEquati
             conditions.getAOA()
         );
     }
+
+    @Override
+    public String toString() {
+        return "URT Modified";
+    }
 }

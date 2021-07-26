@@ -70,4 +70,9 @@ public class AerodynamicForceEquationsSimpleLookup extends AerodynamicForceEquat
             conditions.getAOA()
         );
     }
+
+    @Override
+    public String toString() {
+        return "Simple Lookup";
+    }
 }
