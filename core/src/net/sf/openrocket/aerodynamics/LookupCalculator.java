@@ -280,6 +280,10 @@ public class LookupCalculator extends AbstractAerodynamicCalculator {
 		return aeroCoefficientsFacade;
 	}
 
+	public AerodynamicForceEquations getAeroForceEquations() {
+		return aeroForceEquations;
+	}
+
 	//================================================================================
 	// End of my Modifications
 	//================================================================================

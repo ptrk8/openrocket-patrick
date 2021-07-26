@@ -3,6 +3,7 @@ package net.sf.openrocket.simulation;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
+import net.sf.openrocket.simulation.listeners.telemetry.TelemetryLoggerListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -59,7 +60,7 @@ public class BasicEventSimulationEngine implements SimulationEngine {
 	
 	@Override
 	public FlightData simulate(SimulationConditions simulationConditions) throws SimulationException {
-		
+		simulationConditions.getSimulationListenerList().add(new TelemetryLoggerListener());
 		// Set up flight data
 		FlightData flightData = new FlightData();
 		
