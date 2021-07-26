@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class TelemetryListImpl implements TelemetryList {
 
-    Map<TelemetryStatus, TelemetryBasket> telemetryBasketMap = new LinkedHashMap<>();
+    private final Map<TelemetryStatus, TelemetryBasket> telemetryBasketMap = new LinkedHashMap<>();
 
     public TelemetryListImpl() {
     }

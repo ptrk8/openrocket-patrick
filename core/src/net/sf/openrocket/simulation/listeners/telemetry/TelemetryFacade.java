@@ -24,17 +24,22 @@ public interface TelemetryFacade {
      */
     AerodynamicCalculator getAerodynamicCalculator();
 
-//    /**
-//     * @return The file path of the telemetry CSV file.
-//     */
-//    String getFilePath();
-
-    File getTelemetryFile();
+    /**
+     * @param directoryName The name of the directory where telemetry data is to be saved
+     */
+    void setDirectory(String directoryName);
 
     /**
-     * @param fileName The name of the file.
+     * Precondition: A valid directory must be set
      * @throws FileNotFoundException If the file cannot be created.
      */
-    void printTelemetry(String fileName) throws
+    void exportTelemetry() throws
+        FileNotFoundException;
+
+    /**
+     * Precondition: A valid directory must be set.
+     * @throws FileNotFoundException If the file cannot be created.
+     */
+    void exportCoefficients() throws
         FileNotFoundException;
 }

@@ -23,5 +23,6 @@ public class WriterCsv implements Writer {
             printWriter.println(String.join(",", row.getValues()));
             i++;
         }
+        printWriter.close();
     }
 }

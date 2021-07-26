@@ -106,4 +106,9 @@ public interface AerodynamicForceEquations {
     ) throws
         IllegalStateException;
 
+    /**
+     * Simple accessor to return the aerodynamic coefficients facade.
+     * @return The aerodynamic coefficients facade.
+     */
+    AerodynamicCoefficientsFacade getAerodynamicCoefficientsFacade();
 }

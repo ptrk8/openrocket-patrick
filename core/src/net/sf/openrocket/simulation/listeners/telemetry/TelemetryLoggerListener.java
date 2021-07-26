@@ -33,37 +33,22 @@ public class TelemetryLoggerListener extends AbstractSimulationListener {
     ) {
         System.out.println("Ending Simulation.");
 
+        telemetryFacade.setDirectory(
+            String.format(
+                "%s_%s_%s_%s",
+                dateFormat.format(new Date()),
+                status.getFlightConfiguration().getName(),
+                telemetryFacade.getAerodynamicCalculator().toString(),
+                telemetryFacade.getAerodynamicEquationsName()
+            )
+        );
         try {
-            System.out.println("Printing Telemetry to CSV...");
-            telemetryFacade.printTelemetry(
-                String.format(
-                    "%s_%s_%s_%s",
-                    dateFormat.format(new Date()),
-                    status.getFlightConfiguration().getName(),
-                    telemetryFacade.getAerodynamicCalculator().toString(),
-                    telemetryFacade.getAerodynamicEquationsName()
-                )
-            );
+            System.out.println("Exporting Telemetry...");
+            telemetryFacade.exportTelemetry();
+            telemetryFacade.exportCoefficients();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        System.out.println(
-            String.format(
-                "Finished printing Telemetry to %s",
-                telemetryFacade.getTelemetryFile().getAbsolutePath()
-            )
-        );
-    }
-
-//    @Override
-//    public boolean preStep(SimulationStatus status) throws
-//        SimulationException {
-//        return false;
-//    }
-
-    @Override
-    public void postStep(SimulationStatus status) throws
-        SimulationException {
     }
 
     @Override

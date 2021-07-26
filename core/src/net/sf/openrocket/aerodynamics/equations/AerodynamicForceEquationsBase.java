@@ -19,6 +19,11 @@ public abstract class AerodynamicForceEquationsBase implements AerodynamicForceE
     }
 
     @Override
+    public AerodynamicCoefficientsFacade getAerodynamicCoefficientsFacade() {
+        return aeroCoefficientsFacade;
+    }
+
+    @Override
     public double getCN(FlightConditions conditions, AerodynamicForces currentForces) {
         return currentForces.getCN();
     }
