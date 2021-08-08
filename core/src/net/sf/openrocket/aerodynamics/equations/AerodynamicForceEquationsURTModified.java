@@ -7,6 +7,7 @@ import net.sf.openrocket.aerodynamics.FlightConditions;
 /**
  * Represents USYD Rocketry Team custom aerodynamic force equations.
  */
+@Deprecated
 public class AerodynamicForceEquationsURTModified extends AerodynamicForceEquationsBase {
     @Override
     public double getCN(FlightConditions conditions, AerodynamicForces currentForces) {

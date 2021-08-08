@@ -103,7 +103,7 @@ class SimulationOptionsPanel extends JPanel {
 		label.setToolTipText("Choose which aerodynamic forces calculator you wish to use.");
 		subsub.add(label, "gapright para");
 
-		LookupCalculator lookupCalculator = new LookupCalculator(new AerodynamicForceEquationsURTModified());
+		LookupCalculator lookupCalculator = new LookupCalculator(new AerodynamicForceEquationsSimpleLookup());
 		BarrowmanCalculator barrowmanCalculator = new BarrowmanCalculator();
 
 		JFileChooser fileChooser = new JFileChooser();

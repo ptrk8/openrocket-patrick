@@ -16,17 +16,12 @@ public class AerodynamicCoefficientsFacadeImpl implements AerodynamicCoefficient
 
     private final CoefficientsMapFactory coefficientsMapFactory;
 
-    private final CoefficientsMap coefficientsLift;
+    private final CoefficientsMap coefficientsNormalForce;
     private final CoefficientsMap coefficientsPitchingMoment;
     private final CoefficientsMap coefficientsRollingMoment;
-    private final CoefficientsMap coefficientsDrag;
     private final CoefficientsMap coefficientsAxialForce;
     private final CoefficientsMap coefficientsSideForce;
-    private final CoefficientsMap coefficientsSideForceAlphaDerivative;
-    private final CoefficientsMap coefficientsAxialForceBetaDerivative;
-    private final CoefficientsMap coefficientsSideForceBetaDerivative;
-    private final CoefficientsMap coefficientsPitchingMomentAlphaDerivative;
-    private final CoefficientsMap coefficientsRollingMomentBetaDerivative;
+    private final CoefficientsMap coefficientsYawMoment;
 
     /**
      * Constructor for our concrete implementation of our aerodynamic coefficients facade.
@@ -42,8 +37,8 @@ public class AerodynamicCoefficientsFacadeImpl implements AerodynamicCoefficient
             json.getAngleOfAttackList(),
             interpolator
         );
-        coefficientsLift = coefficientsMapFactory.make(
-            json.getCoefficientLiftList()
+        coefficientsNormalForce = coefficientsMapFactory.make(
+            json.getCoefficientNormalForceList()
         );
         coefficientsPitchingMoment = coefficientsMapFactory.make(
             json.getCoefficientPitchingMomentList()
@@ -51,38 +46,23 @@ public class AerodynamicCoefficientsFacadeImpl implements AerodynamicCoefficient
         coefficientsRollingMoment = coefficientsMapFactory.make(
             json.getCoefficientRollingMomentList()
         );
-        coefficientsDrag = coefficientsMapFactory.make(
-            json.getCoefficientDragList()
-        );
         coefficientsAxialForce = coefficientsMapFactory.make(
             json.getCoefficientAxialForceList()
         );
         coefficientsSideForce = coefficientsMapFactory.make(
             json.getCoefficientSideForceList()
         );
-        coefficientsSideForceAlphaDerivative = coefficientsMapFactory.make(
-            json.getCoefficientSideForceAlphaDerivativeList()
-        );
-        coefficientsAxialForceBetaDerivative = coefficientsMapFactory.make(
-            json.getCoefficientAxialForceBetaDerivativeList()
-        );
-        coefficientsSideForceBetaDerivative = coefficientsMapFactory.make(
-            json.getCoefficientSideForceBetaDerivativeList()
-        );
-        coefficientsPitchingMomentAlphaDerivative = coefficientsMapFactory.make(
-            json.getCoefficientPitchingMomentAlphaDerivativeList()
-        );
-        coefficientsRollingMomentBetaDerivative = coefficientsMapFactory.make(
-            json.getCoefficientRollingMomentBetaDerivativeList()
+        coefficientsYawMoment = coefficientsMapFactory.make(
+            json.getCoefficientYawMomentList()
         );
     }
 
     @Override
-    public double getCoefficientLift(
+    public double getCoefficientNormalForce(
         double machNumber,
         double angleOfAttack
     ) {
-        return coefficientsLift.getCoefficientInterpolated(
+        return coefficientsNormalForce.getCoefficientInterpolated(
             new CoefficientsKeyImpl(
                 new BigDecimal(machNumber),
                 new BigDecimal(angleOfAttack)
@@ -116,18 +96,6 @@ public class AerodynamicCoefficientsFacadeImpl implements AerodynamicCoefficient
         ).doubleValue();
     }
 
-    @Override
-    public double getCoefficientDrag(
-        double machNumber,
-        double angleOfAttack
-    ) {
-        return coefficientsDrag.getCoefficientInterpolated(
-            new CoefficientsKeyImpl(
-                new BigDecimal(machNumber),
-                new BigDecimal(angleOfAttack)
-            )
-        ).doubleValue();
-    }
 
     @Override
     public double getCoefficientAxialForce(
@@ -156,63 +124,11 @@ public class AerodynamicCoefficientsFacadeImpl implements AerodynamicCoefficient
     }
 
     @Override
-    public double getCoefficientSideForceAlphaDerivative(
+    public double getCoefficientYawMoment(
         double machNumber,
         double angleOfAttack
     ) {
-        return coefficientsSideForceAlphaDerivative.getCoefficientInterpolated(
-            new CoefficientsKeyImpl(
-                new BigDecimal(machNumber),
-                new BigDecimal(angleOfAttack)
-            )
-        ).doubleValue();
-    }
-
-    @Override
-    public double getCoefficientAxialForceBetaDerivative(
-        double machNumber,
-        double angleOfAttack
-    ) {
-        return coefficientsAxialForceBetaDerivative.getCoefficientInterpolated(
-            new CoefficientsKeyImpl(
-                new BigDecimal(machNumber),
-                new BigDecimal(angleOfAttack)
-            )
-        ).doubleValue();
-    }
-
-    @Override
-    public double getCoefficientSideForceBetaDerivative(
-        double machNumber,
-        double angleOfAttack
-    ) {
-        return coefficientsSideForceBetaDerivative.getCoefficientInterpolated(
-            new CoefficientsKeyImpl(
-                new BigDecimal(machNumber),
-                new BigDecimal(angleOfAttack)
-            )
-        ).doubleValue();
-    }
-
-    @Override
-    public double getCoefficientPitchingMomentAlphaDerivative(
-        double machNumber,
-        double angleOfAttack
-    ) {
-        return coefficientsPitchingMomentAlphaDerivative.getCoefficientInterpolated(
-            new CoefficientsKeyImpl(
-                new BigDecimal(machNumber),
-                new BigDecimal(angleOfAttack)
-            )
-        ).doubleValue();
-    }
-
-    @Override
-    public double getCoefficientRollingMomentBetaDerivative(
-        double machNumber,
-        double angleOfAttack
-    ) {
-        return coefficientsRollingMomentBetaDerivative.getCoefficientInterpolated(
+        return coefficientsYawMoment.getCoefficientInterpolated(
             new CoefficientsKeyImpl(
                 new BigDecimal(machNumber),
                 new BigDecimal(angleOfAttack)
@@ -223,17 +139,76 @@ public class AerodynamicCoefficientsFacadeImpl implements AerodynamicCoefficient
     @Override
     public Map<String, CoefficientsMap> getCoefficients() {
         Map<String, CoefficientsMap> coefficients = new LinkedHashMap<>();
-        coefficients.put("coefficients_lift", coefficientsLift);
+        coefficients.put("coefficients_normal_force", coefficientsNormalForce);
         coefficients.put("coefficients_pitching_moment", coefficientsPitchingMoment);
         coefficients.put("coefficients_rolling_moment", coefficientsRollingMoment);
-        coefficients.put("coefficients_drag", coefficientsDrag);
         coefficients.put("coefficients_axial_force", coefficientsAxialForce);
         coefficients.put("coefficients_side_force", coefficientsSideForce);
-        coefficients.put("coefficients_side_force_alpha_derivative", coefficientsSideForceAlphaDerivative);
-        coefficients.put("coefficients_axial_force_beta_derivative", coefficientsAxialForceBetaDerivative);
-        coefficients.put("coefficients_side_force_beta_derivative", coefficientsSideForceBetaDerivative);
-        coefficients.put("coefficients_pitching_moment_alpha_derivative", coefficientsPitchingMomentAlphaDerivative);
-        coefficients.put("coefficients_rolling_moment_beta_derivative", coefficientsRollingMomentBetaDerivative);
+        coefficients.put("coefficients_yaw_moment", coefficientsYawMoment);
         return coefficients;
     }
+
+    @Deprecated
+    @Override
+    public double getCoefficientLift(
+        double machNumber,
+        double angleOfAttack
+    ) {
+        return 0;
+    }
+
+    @Deprecated
+    @Override
+    public double getCoefficientDrag(
+        double machNumber,
+        double angleOfAttack
+    ) {
+        return 0;
+    }
+
+    @Deprecated
+    @Override
+    public double getCoefficientSideForceAlphaDerivative(
+        double machNumber,
+        double angleOfAttack
+    ) {
+        return 0;
+    }
+
+    @Deprecated
+    @Override
+    public double getCoefficientAxialForceBetaDerivative(
+        double machNumber,
+        double angleOfAttack
+    ) {
+        return 0;
+    }
+
+    @Deprecated
+    @Override
+    public double getCoefficientSideForceBetaDerivative(
+        double machNumber,
+        double angleOfAttack
+    ) {
+        return 0;
+    }
+
+    @Deprecated
+    @Override
+    public double getCoefficientPitchingMomentAlphaDerivative(
+        double machNumber,
+        double angleOfAttack
+    ) {
+        return 0;
+    }
+
+    @Deprecated
+    @Override
+    public double getCoefficientRollingMomentBetaDerivative(
+        double machNumber,
+        double angleOfAttack
+    ) {
+        return 0;
+    }
+
 }

@@ -7,6 +7,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import net.sf.openrocket.simulation.SimulationStatus;
 import net.sf.openrocket.util.Coordinate;
@@ -84,14 +85,14 @@ public class TelemetryStatusImplTest {
 
         TelemetryStatusImpl status = new TelemetryStatusImpl(statusA);
 
-        Map<String, String> expectedMap = new HashMap<>();
+        Map<String, String> expectedMap = new LinkedHashMap<>();
         expectedMap.put("time", "1.23");
-        expectedMap.put("position_x", "1");
-        expectedMap.put("position_y", "2");
-        expectedMap.put("position_z", "3");
-        expectedMap.put("velocity_x", "3");
-        expectedMap.put("velocity_y", "2");
-        expectedMap.put("velocity_z", "1");
+        expectedMap.put("position_x", "1.0");
+        expectedMap.put("position_y", "2.0");
+        expectedMap.put("position_z", "3.0");
+        expectedMap.put("velocity_x", "3.0");
+        expectedMap.put("velocity_y", "2.0");
+        expectedMap.put("velocity_z", "1.0");
 
         assertEquals(
             expectedMap,

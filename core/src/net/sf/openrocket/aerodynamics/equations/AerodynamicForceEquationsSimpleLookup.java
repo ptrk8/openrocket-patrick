@@ -11,16 +11,7 @@ public class AerodynamicForceEquationsSimpleLookup extends AerodynamicForceEquat
     @Override
     public double getCN(FlightConditions conditions, AerodynamicForces currentForces) {
         checkAerodynamicCoefficientsFacadeIsNotNull();
-        return aeroCoefficientsFacade.getCoefficientLift(
-            conditions.getMach(),
-            conditions.getAOA()
-        );
-    }
-
-    @Override
-    public double getCD(FlightConditions conditions, AerodynamicForces currentForces) {
-        checkAerodynamicCoefficientsFacadeIsNotNull();
-        return aeroCoefficientsFacade.getCoefficientDrag(
+        return aeroCoefficientsFacade.getCoefficientNormalForce(
             conditions.getMach(),
             conditions.getAOA()
         );
@@ -29,7 +20,7 @@ public class AerodynamicForceEquationsSimpleLookup extends AerodynamicForceEquat
     @Override
     public double getCside(FlightConditions conditions, AerodynamicForces currentForces) {
         checkAerodynamicCoefficientsFacadeIsNotNull();
-        return aeroCoefficientsFacade.getCoefficientAxialForce(
+        return aeroCoefficientsFacade.getCoefficientSideForce(
             conditions.getMach(),
             conditions.getAOA()
         );
@@ -38,7 +29,7 @@ public class AerodynamicForceEquationsSimpleLookup extends AerodynamicForceEquat
     @Override
     public double getCyaw(FlightConditions conditions, AerodynamicForces currentForces) {
         checkAerodynamicCoefficientsFacadeIsNotNull();
-        return aeroCoefficientsFacade.getCoefficientSideForce(
+        return aeroCoefficientsFacade.getCoefficientYawMoment(
             conditions.getMach(),
             conditions.getAOA()
         );
@@ -65,7 +56,7 @@ public class AerodynamicForceEquationsSimpleLookup extends AerodynamicForceEquat
     @Override
     public double getCaxial(FlightConditions conditions, AerodynamicForces currentForces) {
         checkAerodynamicCoefficientsFacadeIsNotNull();
-        return aeroCoefficientsFacade.getCoefficientDrag(
+        return aeroCoefficientsFacade.getCoefficientAxialForce(
             conditions.getMach(),
             conditions.getAOA()
         );

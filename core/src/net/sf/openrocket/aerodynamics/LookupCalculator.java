@@ -237,17 +237,11 @@ public class LookupCalculator extends AbstractAerodynamicCalculator {
 			AerodynamicForces currentForces = calculateNonAxialForces(configuration, conditions, warnings);
 
 			currentForces.setCN(aeroForceEquations.getCN(conditions, currentForces));
-			currentForces.setCD(aeroForceEquations.getCD(conditions, currentForces));
 			currentForces.setCside(aeroForceEquations.getCside(conditions, currentForces));
 			currentForces.setCyaw(aeroForceEquations.getCyaw(conditions, currentForces));
 			currentForces.setCm(aeroForceEquations.getCm(conditions, currentForces));
 			currentForces.setCroll(aeroForceEquations.getCroll(conditions, currentForces));
 			currentForces.setCaxial(aeroForceEquations.getCaxial(conditions, currentForces));
-
-			// Calculate damping coefficients for yaw and pitch
-			calculateDampingMoments(configuration, conditions, currentForces);
-			currentForces.setCm(currentForces.getCm() - currentForces.getPitchDampingMoment());
-			currentForces.setCyaw(currentForces.getCyaw() - currentForces.getYawDampingMoment());
 
 			return currentForces;
 		}
