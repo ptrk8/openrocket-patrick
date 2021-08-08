@@ -252,13 +252,13 @@ public class LookupCalculatorTest {
             actualForces
         );
 
-        assertEquals(-0.30086657517515, actualForces.getCN(), delta);
-        assertEquals(-0.3671171661558981, actualForces.getCD(), delta);
+        assertEquals(0.0, actualForces.getCN(), delta);
+        assertEquals(0.0, actualForces.getCD(), delta);
         assertEquals(0.0, actualForces.getCside(), delta);
         assertEquals(0.0, actualForces.getCyaw(), delta);
-        assertEquals(0.0, actualForces.getCm(), delta);
+        assertEquals(-1.0593874386777191, actualForces.getCm(), delta);
         assertEquals(-0.00006873511531597171, actualForces.getCroll(), delta);
-        assertEquals(-0.3671171661558981, actualForces.getCaxial(), delta);
+        assertEquals(0.0, actualForces.getCaxial(), delta);
     }
 
     @Test
@@ -282,13 +282,13 @@ public class LookupCalculatorTest {
             actualForces
         );
 
-        assertEquals(0.34379771561893385, actualForces.getCN(), delta);
+        assertEquals(0.0, actualForces.getCN(), delta);
         assertEquals(0.0, actualForces.getCD(), delta); // Note we are not overriding CD in USYD URT
-        assertEquals(-0.18808719307800298, actualForces.getCside(), delta);
-        assertEquals(0.7452465802759779, actualForces.getCyaw(), delta);
-        assertEquals(0.0, actualForces.getCm(), delta);
-        assertEquals(0.0020672724351863936, actualForces.getCroll(), delta);
-        assertEquals(0.3658121993886502, actualForces.getCaxial(), delta);
+        assertEquals(0.0, actualForces.getCside(), delta);
+        assertEquals(0.0, actualForces.getCyaw(), delta);
+        assertEquals(-1.3482200608171802, actualForces.getCm(), delta);
+        assertEquals(0.0, actualForces.getCroll(), delta);
+        assertEquals(0.0, actualForces.getCaxial(), delta);
     }
 
 }

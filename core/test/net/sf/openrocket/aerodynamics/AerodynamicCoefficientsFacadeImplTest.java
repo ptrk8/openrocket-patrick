@@ -39,7 +39,7 @@ public class AerodynamicCoefficientsFacadeImplTest {
         double machNumber = 0.35;
         double angleOfAttack = 1.5;
 
-        double actualCoefficientLift = coefficients.getCoefficientLift(
+        double actualCoefficientNormalForce = coefficients.getCoefficientNormalForce(
             machNumber,
             angleOfAttack
         );
@@ -51,7 +51,7 @@ public class AerodynamicCoefficientsFacadeImplTest {
             machNumber,
             angleOfAttack
         );
-        double actualCoefficientDrag = coefficients.getCoefficientDrag(
+        double actualCoefficientYawMoment = coefficients.getCoefficientDrag(
             machNumber,
             angleOfAttack
         );
@@ -65,16 +65,16 @@ public class AerodynamicCoefficientsFacadeImplTest {
         );
 
         // C_L
-        assertEquals(-0.26117667275, actualCoefficientLift, delta);
+        assertEquals(-0.26117667275, actualCoefficientNormalForce, delta);
         // C_m
         assertEquals(-0.9228306405, actualCoefficientPitchingMoment, delta);
         // C_l
         assertEquals(-0.0000644421, actualCoefficientRollingMoment, delta);
-        // C_d
-        assertEquals(-0.361632334, actualCoefficientDrag, delta);
-        // C_y
-        assertEquals(0, actualCoefficientAxialForce, delta);
         // C_n
+        assertEquals(0, actualCoefficientYawMoment, delta);
+        // C_a
+        assertEquals(0, actualCoefficientAxialForce, delta);
+        // C_y
         assertEquals(0, actualCoefficientSideForce, delta);
     }
 
@@ -87,7 +87,7 @@ public class AerodynamicCoefficientsFacadeImplTest {
         double machNumber = 0.38;
         double angleOfAttack = -0.97;
 
-        double actualCoefficientLift = coefficients.getCoefficientLift(
+        double actualCoefficientNormalForce = coefficients.getCoefficientNormalForce(
             machNumber,
             angleOfAttack
         );
@@ -99,7 +99,7 @@ public class AerodynamicCoefficientsFacadeImplTest {
             machNumber,
             angleOfAttack
         );
-        double actualCoefficientDrag = coefficients.getCoefficientDrag(
+        double actualCoefficientYawMoment = coefficients.getCoefficientDrag(
             machNumber,
             angleOfAttack
         );
@@ -112,17 +112,17 @@ public class AerodynamicCoefficientsFacadeImplTest {
             angleOfAttack
         );
 
-        // C_L
-        assertEquals(0.164801601154, actualCoefficientLift, delta);
+        // C_N
+        assertEquals(0.164801601154, actualCoefficientNormalForce, delta);
         // C_m
         assertEquals(0.573195243184, actualCoefficientPitchingMoment, delta);
         // C_l
         assertEquals(-0.000067513728, actualCoefficientRollingMoment, delta);
-        // C_d
-        assertEquals(-0.359419896144, actualCoefficientDrag, delta);
-        // C_y
-        assertEquals(0, actualCoefficientAxialForce, delta);
         // C_n
+        assertEquals(0, actualCoefficientYawMoment, delta);
+        // C_a
+        assertEquals(0, actualCoefficientAxialForce, delta);
+        // C_y
         assertEquals(0, actualCoefficientSideForce, delta);
     }
 
@@ -135,7 +135,7 @@ public class AerodynamicCoefficientsFacadeImplTest {
         double machNumber = 0.6;
         double angleOfAttack = -1.3;
 
-        double actualCoefficientLift = coefficients.getCoefficientLift(
+        double actualCoefficientNormalForce = coefficients.getCoefficientNormalForce(
             machNumber,
             angleOfAttack
         );
@@ -147,7 +147,7 @@ public class AerodynamicCoefficientsFacadeImplTest {
             machNumber,
             angleOfAttack
         );
-        double actualCoefficientDrag = coefficients.getCoefficientDrag(
+        double actualCoefficientYawMoment = coefficients.getCoefficientYawMoment(
             machNumber,
             angleOfAttack
         );
@@ -160,17 +160,17 @@ public class AerodynamicCoefficientsFacadeImplTest {
             angleOfAttack
         );
 
-        // C_L
-        assertEquals(0.2254051912, actualCoefficientLift, delta);
+        // C_N
+        assertEquals(0.2254051912, actualCoefficientNormalForce, delta);
         // C_m
         assertEquals(0.8067427936, actualCoefficientPitchingMoment, delta);
+        // C_n
+        assertEquals(0.0, actualCoefficientYawMoment, delta);
         // C_l
         assertEquals(-0.000032578301, actualCoefficientRollingMoment, delta);
-        // C_d
-        assertEquals(-0.3466424469, actualCoefficientDrag, delta);
-        // C_y
+        // C_a
         assertEquals(0, actualCoefficientAxialForce, delta);
-        // C_n
+        // C_y
         assertEquals(0, actualCoefficientSideForce, delta);
     }
 
@@ -183,7 +183,7 @@ public class AerodynamicCoefficientsFacadeImplTest {
         double machNumber = 0.66;
         double angleOfAttack = -5;
 
-        double actualCoefficientLift = coefficients.getCoefficientLift(
+        double actualCoefficientNormalForce = coefficients.getCoefficientNormalForce(
             machNumber,
             angleOfAttack
         );
@@ -195,7 +195,7 @@ public class AerodynamicCoefficientsFacadeImplTest {
             machNumber,
             angleOfAttack
         );
-        double actualCoefficientDrag = coefficients.getCoefficientDrag(
+        double actualCoefficientYawMoment = coefficients.getCoefficientDrag(
             machNumber,
             angleOfAttack
         );
@@ -208,17 +208,17 @@ public class AerodynamicCoefficientsFacadeImplTest {
             angleOfAttack
         );
 
-        // C_L
-        assertEquals(0.9304426248000001, actualCoefficientLift, delta);
+        // C_N
+        assertEquals(0.9304426248000001, actualCoefficientNormalForce, delta);
         // C_m
         assertEquals(3.4363543058, actualCoefficientPitchingMoment, delta);
         // C_l
         assertEquals(0.00046811920000000004, actualCoefficientRollingMoment, delta);
-        // C_d
-        assertEquals(-0.3559417474, actualCoefficientDrag, delta);
-        // C_y
-        assertEquals(0, actualCoefficientAxialForce, delta);
         // C_n
+        assertEquals(0, actualCoefficientYawMoment, delta);
+        // C_a
+        assertEquals(0, actualCoefficientAxialForce, delta);
+        // C_y
         assertEquals(0, actualCoefficientSideForce, delta);
     }
 
@@ -231,7 +231,7 @@ public class AerodynamicCoefficientsFacadeImplTest {
         double machNumber = 0.6;
         double angleOfAttack = 3;
 
-        double actualCoefficientLift = coefficients.getCoefficientLift(
+        double actualCoefficientNormalForce = coefficients.getCoefficientNormalForce(
             machNumber,
             angleOfAttack
         );
@@ -243,7 +243,7 @@ public class AerodynamicCoefficientsFacadeImplTest {
             machNumber,
             angleOfAttack
         );
-        double actualCoefficientDrag = coefficients.getCoefficientDrag(
+        double actualCoefficientYawMoment = coefficients.getCoefficientDrag(
             machNumber,
             angleOfAttack
         );
@@ -256,17 +256,17 @@ public class AerodynamicCoefficientsFacadeImplTest {
             angleOfAttack
         );
 
-        // C_L
-        assertEquals(-0.5471648751, actualCoefficientLift, delta);
+        // C_N
+        assertEquals(-0.5471648751, actualCoefficientNormalForce, delta);
         // C_m
         assertEquals(-2.019845759, actualCoefficientPitchingMoment, delta);
         // C_l
         assertEquals(-0.0000458939, actualCoefficientRollingMoment, delta);
-        // C_d
-        assertEquals(-0.352495541, actualCoefficientDrag, delta);
-        // C_y
-        assertEquals(0, actualCoefficientAxialForce, delta);
         // C_n
+        assertEquals(0, actualCoefficientYawMoment, delta);
+        // C_a
+        assertEquals(0, actualCoefficientAxialForce, delta);
+        // C_y
         assertEquals(0, actualCoefficientSideForce, delta);
     }
 
@@ -286,7 +286,7 @@ public class AerodynamicCoefficientsFacadeImplTest {
 
         for (double machNumber : invalidMachNumbers) {
             assertThrows(IllegalArgumentException.class, () -> {
-                double actualCoefficientLift = coefficients.getCoefficientLift(
+                double actualCoefficientNormalForce = coefficients.getCoefficientNormalForce(
                     machNumber,
                     angleOfAttack
                 );
@@ -300,12 +300,6 @@ public class AerodynamicCoefficientsFacadeImplTest {
 
             assertThrows(IllegalArgumentException.class, () -> {
                 double actualCoefficientRollingMoment = coefficients.getCoefficientRollingMoment(
-                    machNumber,
-                    angleOfAttack
-                );
-            });
-            assertThrows(IllegalArgumentException.class, () -> {
-                double actualCoefficientDrag = coefficients.getCoefficientDrag(
                     machNumber,
                     angleOfAttack
                 );
@@ -342,7 +336,7 @@ public class AerodynamicCoefficientsFacadeImplTest {
 
         for (double angleOfAttack : invalidAnglesOfAttack) {
             assertThrows(IllegalArgumentException.class, () -> {
-                double actualCoefficientLift = coefficients.getCoefficientLift(
+                double actualCoefficientNormalForce = coefficients.getCoefficientNormalForce(
                     machNumber,
                     angleOfAttack
                 );
@@ -356,12 +350,6 @@ public class AerodynamicCoefficientsFacadeImplTest {
 
             assertThrows(IllegalArgumentException.class, () -> {
                 double actualCoefficientRollingMoment = coefficients.getCoefficientRollingMoment(
-                    machNumber,
-                    angleOfAttack
-                );
-            });
-            assertThrows(IllegalArgumentException.class, () -> {
-                double actualCoefficientDrag = coefficients.getCoefficientDrag(
                     machNumber,
                     angleOfAttack
                 );

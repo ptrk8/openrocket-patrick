@@ -9,29 +9,41 @@ public interface AerodynamicCoefficients {
 
     List<BigDecimal> getAngleOfAttackList();
 
-    List<BigDecimal> getCoefficientLiftList();
+    List<BigDecimal> getCoefficientNormalForceList();
 
     List<BigDecimal> getCoefficientPitchingMomentList();
 
     List<BigDecimal> getCoefficientRollingMomentList();
 
-    List<BigDecimal> getCoefficientDragList();
-
     List<BigDecimal> getCoefficientAxialForceList();
 
     List<BigDecimal> getCoefficientSideForceList();
 
-    List<BigDecimal> getCoefficientSideForceAlphaDerivativeList();
-
-    List<BigDecimal> getCoefficientAxialForceBetaDerivativeList();
-
-    List<BigDecimal> getCoefficientSideForceBetaDerivativeList();
-
-    List<BigDecimal> getCoefficientPitchingMomentAlphaDerivativeList();
-
-    List<BigDecimal> getCoefficientRollingMomentBetaDerivativeList();
+    List<BigDecimal> getCoefficientYawMomentList();
 
     BigDecimal getAngleOfAttackMin();
 
     BigDecimal getAngleOfAttackMax();
+
+    @Deprecated
+    List<BigDecimal> getCoefficientDragList();
+
+    @Deprecated
+    List<BigDecimal> getCoefficientLiftList();
+
+    @Deprecated
+    List<BigDecimal> getCoefficientSideForceAlphaDerivativeList();
+
+    @Deprecated
+    List<BigDecimal> getCoefficientAxialForceBetaDerivativeList();
+
+    @Deprecated
+    List<BigDecimal> getCoefficientSideForceBetaDerivativeList();
+
+    @Deprecated
+    List<BigDecimal> getCoefficientPitchingMomentAlphaDerivativeList();
+
+    @Deprecated
+    List<BigDecimal> getCoefficientRollingMomentBetaDerivativeList();
+
 }

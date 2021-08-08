@@ -28,9 +28,9 @@ public class TelemetryFacadeImplTest {
         URISyntaxException {
     }
 
-//    @Test
-//    public void exportCoefficientsShouldExportCoefficients() throws
-//        FileNotFoundException {
+    @Test
+    public void exportCoefficientsShouldExportCoefficients() throws
+        FileNotFoundException {
 //        LookupCalculator lookupCalculator = new LookupCalculator(equationsURTModified);
 //        lookupCalculator.setAeroCoefficients(validCoefficientsFileFullAsymmetric);
 //
@@ -38,5 +38,5 @@ public class TelemetryFacadeImplTest {
 //
 //        telemetryFacade.setDirectory("test5");
 //        telemetryFacade.exportCoefficients();
-//    }
+    }
 }

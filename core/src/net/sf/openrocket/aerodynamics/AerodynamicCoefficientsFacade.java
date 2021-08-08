@@ -14,7 +14,7 @@ public interface AerodynamicCoefficientsFacade {
      * @param angleOfAttack An angle of attack in the range of our lookup table.
      * @return The requested coefficient derived from our lookup table.
      */
-    double getCoefficientLift(
+    double getCoefficientNormalForce(
         double machNumber,
         double angleOfAttack
     );
@@ -47,17 +47,6 @@ public interface AerodynamicCoefficientsFacade {
      * @param angleOfAttack An angle of attack in the range of our lookup table.
      * @return The requested coefficient derived from our lookup table.
      */
-    double getCoefficientDrag(
-        double machNumber,
-        double angleOfAttack
-    );
-
-    /**
-     * Retrieves the exact or interpolated coefficient in our lookup table.
-     * @param machNumber A mach number in the range of our lookup table.
-     * @param angleOfAttack An angle of attack in the range of our lookup table.
-     * @return The requested coefficient derived from our lookup table.
-     */
     double getCoefficientAxialForce(
         double machNumber,
         double angleOfAttack
@@ -80,51 +69,7 @@ public interface AerodynamicCoefficientsFacade {
      * @param angleOfAttack An angle of attack in the range of our lookup table.
      * @return The requested coefficient derived from our lookup table.
      */
-    double getCoefficientSideForceAlphaDerivative(
-        double machNumber,
-        double angleOfAttack
-    );
-
-    /**
-     * Retrieves the exact or interpolated coefficient in our lookup table.
-     * @param machNumber A mach number in the range of our lookup table.
-     * @param angleOfAttack An angle of attack in the range of our lookup table.
-     * @return The requested coefficient derived from our lookup table.
-     */
-    double getCoefficientAxialForceBetaDerivative(
-        double machNumber,
-        double angleOfAttack
-    );
-
-    /**
-     * Retrieves the exact or interpolated coefficient in our lookup table.
-     * @param machNumber A mach number in the range of our lookup table.
-     * @param angleOfAttack An angle of attack in the range of our lookup table.
-     * @return The requested coefficient derived from our lookup table.
-     */
-    double getCoefficientSideForceBetaDerivative(
-        double machNumber,
-        double angleOfAttack
-    );
-
-    /**
-     * Retrieves the exact or interpolated coefficient in our lookup table.
-     * @param machNumber A mach number in the range of our lookup table.
-     * @param angleOfAttack An angle of attack in the range of our lookup table.
-     * @return The requested coefficient derived from our lookup table.
-     */
-    double getCoefficientPitchingMomentAlphaDerivative(
-        double machNumber,
-        double angleOfAttack
-    );
-
-    /**
-     * Retrieves the exact or interpolated coefficient in our lookup table.
-     * @param machNumber A mach number in the range of our lookup table.
-     * @param angleOfAttack An angle of attack in the range of our lookup table.
-     * @return The requested coefficient derived from our lookup table.
-     */
-    double getCoefficientRollingMomentBetaDerivative(
+    double getCoefficientYawMoment(
         double machNumber,
         double angleOfAttack
     );
@@ -134,4 +79,47 @@ public interface AerodynamicCoefficientsFacade {
      * @return Map of the coefficient's name and the corresponding coefficients map.
      */
     Map<String, CoefficientsMap> getCoefficients();
+
+    @Deprecated
+    double getCoefficientLift(
+        double machNumber,
+        double angleOfAttack
+    );
+
+    @Deprecated
+    double getCoefficientDrag(
+        double machNumber,
+        double angleOfAttack
+    );
+
+    @Deprecated
+    double getCoefficientSideForceAlphaDerivative(
+        double machNumber,
+        double angleOfAttack
+    );
+
+    @Deprecated
+    double getCoefficientAxialForceBetaDerivative(
+        double machNumber,
+        double angleOfAttack
+    );
+
+    @Deprecated
+    double getCoefficientSideForceBetaDerivative(
+        double machNumber,
+        double angleOfAttack
+    );
+
+    @Deprecated
+    double getCoefficientPitchingMomentAlphaDerivative(
+        double machNumber,
+        double angleOfAttack
+    );
+
+    @Deprecated
+    double getCoefficientRollingMomentBetaDerivative(
+        double machNumber,
+        double angleOfAttack
+    );
+
 }

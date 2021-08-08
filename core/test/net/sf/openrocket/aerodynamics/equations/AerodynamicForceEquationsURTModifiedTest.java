@@ -12,6 +12,7 @@ import net.sf.openrocket.aerodynamics.FlightConditions;
 import org.junit.Before;
 import org.junit.Test;
 
+@Deprecated
 public class AerodynamicForceEquationsURTModifiedTest {
 
     public final double delta = 0.0000001;

@@ -16,8 +16,8 @@ public class AerodynamicCoefficientsImpl implements AerodynamicCoefficients {
     @JsonProperty("angle_of_attack")
     public List<BigDecimal> angleOfAttackList;
 
-    @JsonProperty("c_L")
-    public List<BigDecimal> coefficientLiftList;
+    @JsonProperty("c_N")
+    public List<BigDecimal> coefficientNormalForceList;
 
     @JsonProperty("c_m")
     public List<BigDecimal> coefficientPitchingMomentList;
@@ -25,29 +25,14 @@ public class AerodynamicCoefficientsImpl implements AerodynamicCoefficients {
     @JsonProperty("c_l")
     public List<BigDecimal> coefficientRollingMomentList;
 
-    @JsonProperty("c_d")
-    public List<BigDecimal> coefficientDragList;
-
-    @JsonProperty("c_y")
+    @JsonProperty("c_a")
     public List<BigDecimal> coefficientAxialForceList;
 
-    @JsonProperty("c_n")
+    @JsonProperty("c_y")
     public List<BigDecimal> coefficientSideForceList;
 
-    @JsonProperty("c_na")
-    public List<BigDecimal> coefficientSideForceAlphaDerivativeList;
-
-    @JsonProperty("c_yb")
-    public List<BigDecimal> coefficientAxialForceBetaDerivativeList;
-
-    @JsonProperty("c_nb")
-    public List<BigDecimal> coefficientSideForceBetaDerivativeList;
-
-    @JsonProperty("c_ma")
-    public List<BigDecimal> coefficientPitchingMomentAlphaDerivativeList;
-
-    @JsonProperty("c_lb")
-    public List<BigDecimal> coefficientRollingMomentBetaDerivativeList;
+    @JsonProperty("c_n")
+    public List<BigDecimal> coefficientYawMomentList;
 
     @Override
     public List<BigDecimal> getMachList() {
@@ -60,8 +45,8 @@ public class AerodynamicCoefficientsImpl implements AerodynamicCoefficients {
     }
 
     @Override
-    public List<BigDecimal> getCoefficientLiftList() {
-        return coefficientLiftList;
+    public List<BigDecimal> getCoefficientNormalForceList() {
+        return coefficientNormalForceList;
     }
 
     @Override
@@ -75,11 +60,6 @@ public class AerodynamicCoefficientsImpl implements AerodynamicCoefficients {
     }
 
     @Override
-    public List<BigDecimal> getCoefficientDragList() {
-        return coefficientDragList;
-    }
-
-    @Override
     public List<BigDecimal> getCoefficientAxialForceList() {
         return coefficientAxialForceList;
     }
@@ -90,28 +70,8 @@ public class AerodynamicCoefficientsImpl implements AerodynamicCoefficients {
     }
 
     @Override
-    public List<BigDecimal> getCoefficientSideForceAlphaDerivativeList() {
-        return coefficientSideForceAlphaDerivativeList;
-    }
-
-    @Override
-    public List<BigDecimal> getCoefficientAxialForceBetaDerivativeList() {
-        return coefficientAxialForceBetaDerivativeList;
-    }
-
-    @Override
-    public List<BigDecimal> getCoefficientSideForceBetaDerivativeList() {
-        return coefficientSideForceBetaDerivativeList;
-    }
-
-    @Override
-    public List<BigDecimal> getCoefficientPitchingMomentAlphaDerivativeList() {
-        return coefficientPitchingMomentAlphaDerivativeList;
-    }
-
-    @Override
-    public List<BigDecimal> getCoefficientRollingMomentBetaDerivativeList() {
-        return coefficientRollingMomentBetaDerivativeList;
+    public List<BigDecimal> getCoefficientYawMomentList() {
+        return coefficientYawMomentList;
     }
 
     @Override
@@ -129,4 +89,75 @@ public class AerodynamicCoefficientsImpl implements AerodynamicCoefficients {
             .max(Comparator.naturalOrder())
             .orElse(null);
     }
+
+    @Deprecated
+    @JsonProperty("c_L")
+    public List<BigDecimal> coefficientLiftList;
+
+    @Deprecated
+    @JsonProperty("c_d")
+    public List<BigDecimal> coefficientDragList;
+
+    @Deprecated
+    @JsonProperty("c_na")
+    public List<BigDecimal> coefficientSideForceAlphaDerivativeList;
+
+    @Deprecated
+    @JsonProperty("c_yb")
+    public List<BigDecimal> coefficientAxialForceBetaDerivativeList;
+
+    @Deprecated
+    @JsonProperty("c_nb")
+    public List<BigDecimal> coefficientSideForceBetaDerivativeList;
+
+    @Deprecated
+    @JsonProperty("c_ma")
+    public List<BigDecimal> coefficientPitchingMomentAlphaDerivativeList;
+
+    @Deprecated
+    @JsonProperty("c_lb")
+    public List<BigDecimal> coefficientRollingMomentBetaDerivativeList;
+
+    @Deprecated
+    @Override
+    public List<BigDecimal> getCoefficientLiftList() {
+        return coefficientLiftList;
+    }
+
+    @Deprecated
+    @Override
+    public List<BigDecimal> getCoefficientDragList() {
+        return coefficientDragList;
+    }
+
+    @Deprecated
+    @Override
+    public List<BigDecimal> getCoefficientSideForceAlphaDerivativeList() {
+        return coefficientSideForceAlphaDerivativeList;
+    }
+
+    @Deprecated
+    @Override
+    public List<BigDecimal> getCoefficientAxialForceBetaDerivativeList() {
+        return coefficientAxialForceBetaDerivativeList;
+    }
+
+    @Deprecated
+    @Override
+    public List<BigDecimal> getCoefficientSideForceBetaDerivativeList() {
+        return coefficientSideForceBetaDerivativeList;
+    }
+
+    @Deprecated
+    @Override
+    public List<BigDecimal> getCoefficientPitchingMomentAlphaDerivativeList() {
+        return coefficientPitchingMomentAlphaDerivativeList;
+    }
+
+    @Deprecated
+    @Override
+    public List<BigDecimal> getCoefficientRollingMomentBetaDerivativeList() {
+        return coefficientRollingMomentBetaDerivativeList;
+    }
+
 }

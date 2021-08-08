@@ -35,11 +35,12 @@ public class TelemetryLoggerListener extends AbstractSimulationListener {
 
         telemetryFacade.setDirectory(
             String.format(
-                "%s_%s_%s_%s",
+                "%s_%s_%s_%s_%d",
                 dateFormat.format(new Date()),
                 status.getFlightConfiguration().getName(),
                 telemetryFacade.getAerodynamicCalculator().toString(),
-                telemetryFacade.getAerodynamicEquationsName()
+                telemetryFacade.getAerodynamicEquationsName(),
+                System.currentTimeMillis() // prevents Swing unit tests from failing because directory exists
             )
         );
         try {

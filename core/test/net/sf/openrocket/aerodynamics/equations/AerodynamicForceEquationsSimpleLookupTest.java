@@ -35,9 +35,6 @@ public class AerodynamicForceEquationsSimpleLookupTest {
             equations.getCN(conditions, forces);
         });
         assertThrows(IllegalStateException.class, () -> {
-            equations.getCD(conditions, forces);
-        });
-        assertThrows(IllegalStateException.class, () -> {
             equations.getCside(conditions, forces);
         });
         assertThrows(IllegalStateException.class, () -> {
@@ -58,7 +55,7 @@ public class AerodynamicForceEquationsSimpleLookupTest {
     public void getCNShouldUseLookupTable() {
         double expectedValue = 12.3;
 
-        when(aerodynamicCoefficientsFacade.getCoefficientLift(
+        when(aerodynamicCoefficientsFacade.getCoefficientNormalForce(
             anyDouble(),
             anyDouble()
         )).thenReturn(expectedValue);
@@ -71,26 +68,10 @@ public class AerodynamicForceEquationsSimpleLookupTest {
     }
 
     @Test
-    public void getCDShouldUseLookupTable() {
-        double expectedValue = 11.3;
-
-        when(aerodynamicCoefficientsFacade.getCoefficientDrag(
-            anyDouble(),
-            anyDouble()
-        )).thenReturn(expectedValue);
-
-        AerodynamicForceEquations equations = new AerodynamicForceEquationsSimpleLookup();
-        equations.setAerodynamicCoefficientsFacade(aerodynamicCoefficientsFacade);
-
-        double actualValue = equations.getCD(conditions, forces);
-        assertEquals(expectedValue, actualValue, delta);
-    }
-
-    @Test
     public void getCsideShouldUseLookupTable() {
         double expectedValue = 32.2;
 
-        when(aerodynamicCoefficientsFacade.getCoefficientAxialForce(
+        when(aerodynamicCoefficientsFacade.getCoefficientSideForce(
             anyDouble(),
             anyDouble()
         )).thenReturn(expectedValue);
@@ -106,7 +87,7 @@ public class AerodynamicForceEquationsSimpleLookupTest {
     public void getCyawShouldUseLookupTable() {
         double expectedValue = 2.2;
 
-        when(aerodynamicCoefficientsFacade.getCoefficientSideForce(
+        when(aerodynamicCoefficientsFacade.getCoefficientYawMoment(
             anyDouble(),
             anyDouble()
         )).thenReturn(expectedValue);
@@ -154,7 +135,7 @@ public class AerodynamicForceEquationsSimpleLookupTest {
     public void getCaxialShouldUseLookupTable() {
         double expectedValue = 3.2;
 
-        when(aerodynamicCoefficientsFacade.getCoefficientDrag(
+        when(aerodynamicCoefficientsFacade.getCoefficientAxialForce(
             anyDouble(),
             anyDouble()
         )).thenReturn(expectedValue);
